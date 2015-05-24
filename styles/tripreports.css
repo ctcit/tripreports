@@ -22,6 +22,11 @@ div.tripimage {
     text-align:center;
 }
 
+.li_link {
+    font-size: larger;
+    padding-bottom: 8 px;
+}
+
 .caption-input {
     width: 30em;
 }

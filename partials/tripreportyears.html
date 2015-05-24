@@ -15,7 +15,7 @@ and open the template in the editor.
         <label for='recentOnlyId'>Recent years only</label>
         <input type='checkbox' ng-model='recentOnly' ng-change='checkboxChanged()'/>
         <ul class='list-unstyled'>
-            <li ng-repeat='i in range(numYears)'>
+            <li ng-repeat='i in range(numYears)' class="li_link">
                 <a href='#tripreportsforyear/{{years[i]}}'>{{years[i]}}</a>
             </li>
         </ul>
