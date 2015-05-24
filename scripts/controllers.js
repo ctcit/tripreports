@@ -63,8 +63,10 @@
                 i = 0;
             globals.tripId = 0;
             $scope.year = $params.year;
+            $scope.loading = true;
             $http.get(url).then(function (response) {
                 $scope.triplist = response.data;
+                $scope.loading = false;
             });
         }]);
     

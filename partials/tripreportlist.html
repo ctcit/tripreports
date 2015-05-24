@@ -10,7 +10,11 @@
         <h2>CTC Trip Reports for {{year}}</h2>
                 </ul>
         <p><a href='#/tripreports'>Back to list of years</a></p>
-
+        
+        <button ng-show="loader.loading" class="btn btn-success">Loading...
+            <i class="fa fa-spinner fa-spin"></i>
+        </button>
+        
         <ul class='list-unstyled'>
             <ul>
                 <li ng-repeat="trip in triplist">
