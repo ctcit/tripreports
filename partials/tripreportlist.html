@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Trip Report List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <h2>CTC Trip Reports for {{year}}</h2>
+                </ul>
+        <p><a href='#/tripreports'>Back to list of years</a></p>
+
+        <ul class='list-unstyled'>
+            <ul>
+                <li ng-repeat="trip in triplist">
+                    <a href="#tripreports/{{trip.id}}">{{trip.date_display}}: {{trip.title}}</a>
+                </li>
+            </ul>
+        </ul>
+
+        <p><a href='#/tripreports'>Back to list of years</a></p>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+/*  Styles for the CTC Trip Reports module */
+
+/* 
+    Created on : 22/03/2015, 3:12:39 PM
+    Author     : Richard Lobb
+*/
+
+body {
+    padding-top: 50px;
+}
+
+.navbar-brand {
+    font-size: 36px;
+    color: white !important; 
+}
+.row-no-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+div.tripimage {
+    text-align:center;
+}
+
+.caption-input {
+    width: 30em;
+}
+
+table.image-table td {
+    padding: 7px;
+}
+
+table.image-table th {
+    text-align: center;
+}
+
+.resourcetable, .resourcetable td, .resourcetable th {
+    border: 1px solid #e0e0e0;
+    border-collapse: collapse;
+}
+
+table.resourcetable {
+    margin-bottom: 10px;
+}
+
+.dl-horizontal dt, .dl-horizontal dd {
+    margin-top: 8px;
+}
+
+h3.resource-h3 {
+    margin-top: 40pt;
+}
+
+#gpx-table td, #gpx-table th, #map-table td, #map-table th {
+    padding-left: 10px;
+    padding-right: 10px;
+}

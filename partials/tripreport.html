@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>{{tripReport.title}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <div class="tripReport">
+            <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
+    
+            <h2>{{tripReport.date_display}}: {{tripReport.title}}</h2>
+            <div class='tripimages' ng-if='tripReport.images'>
+                <h3>Trip Photos</h3>
+                <div ng-repeat='i in range(numImageRows)' class="row">
+                    <div ng-repeat='col in range(3)'>
+                        <div ng-if='3 * i + col < numImages' class="col-xs-4 tripimage">
+                            <a href='{{globals.SITE_URL}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
+                               target='_blank'>
+                            <img class='img-thumbnail' 
+                                ng-src="{{globals.SITE_URL}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}"/>
+                            </a>
+                            <p><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <dl>
+                <div class='tripgpxs' ng-if='tripReport.gpxs'>
+
+                    <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
+                    <ul class="list-unstyled">
+                    <li ng-repeat='gpx in tripReport.gpxs'>
+                        <span ng-bind-html='itemCaption(gpx) | unsafe'></span>
+                        <a href="{{globals.SITE_URL}}/dbgpx.php?id={{gpx.id}}">
+                            Download file</a>&nbsp;
+                        <a href='{{globals.SITE_URL}}' target="_blank">View on Topomap</a>
+                    </li>
+                    </ul>
+                </div>
+
+                <div class='tripmaps' ng-if='tripReport.maps'>
+                    <h4>{{pluralise('Trip map', numMaps)}}:</h4>
+                    <ul class="list-unstyled">
+                    <li ng-repeat='map in tripReport.maps'>
+                        <span ng-bind-html='itemCaption(map) | unsafe'></span>
+                        <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'/>
+                        {{map.name}}</a>
+                    </li>
+                    </ul>
+                </div>
+            </dl>
+            
+            <p ng-if='numGpxs + numMaps > 0'>
+                Note: A CTC map image or a GPX route shows the approximate
+                route taken by a particular party on a particular day.
+                It should not be regarded as a recommended route or even
+                necessarily a good route. Also, permission from land-owners
+                may be required.
+            </p>
+            
+            <h3 ng-if='numGpxs + numMaps + numImages > 0'>Trip Report</h3>
+            <div class='reportbody' ng-bind-html='tripReport.body | unsafe'>
+            </div>
+            <p>--Uploaded by: {{tripReport.uploader_name}}</p
+        </div>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CTC Trip Report Years</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+    <body>
+        <h2>Select year of interest</h2>
+        <label for='recentOnlyId'>Recent years only</label>
+        <input type='checkbox' ng-model='recentOnly' ng-change='checkboxChanged()'/>
+        <ul class='list-unstyled'>
+            <li ng-repeat='i in range(numYears)'>
+                <a href='#tripreportsforyear/{{years[i]}}'>{{years[i]}}</a>
+            </li>
+        </ul>
+    </body>
+</html>
