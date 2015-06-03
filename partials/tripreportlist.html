@@ -7,9 +7,9 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <h2>CTC Trip Reports for {{year}}</h2>
+        <h2>Trip Reports for {{year}}</h2>
                 </ul>
-        <p><a href='#/tripreports'>Back to list of years</a></p>
+        <p><a href='#/tripreports'><span class="li_link">Back to list of years</span></a></p>
         
         <button ng-show="loading" class="btn btn-success">Loading...
             <i class="fa fa-spinner fa-spin"></i>
@@ -17,12 +17,12 @@
         
         <ul class='list-unstyled'>
             <ul>
-                <li ng-repeat="trip in triplist"  class="li_link">
-                    <a href="#tripreports/{{trip.id}}">{{trip.date_display}}: {{trip.title}}</a>
+                <li ng-repeat="trip in triplist" class="li_link">
+                    <a href="#tripreports/{{trip.id}}" >{{trip.date_display}}: {{trip.title}}</a>
                 </li>
             </ul>
         </ul>
 
-        <p><a href='#/tripreports'>Back to list of years</a></p>
+        <p><a href='#/tripreports'><span class="li_link">Back to list of years</span></a></p>
     </body>
 </html>

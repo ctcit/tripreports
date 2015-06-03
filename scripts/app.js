@@ -69,20 +69,22 @@
     tripReportApp.factory('TripReport', ['$resource', 'globals',
         function($resource, globals) {
             return $resource(
-                        globals.SITE_URL + '/db/index.php/rest/tripreports/:tripId',
-                        {'tripId': '@id'},
-                        {
-                            update: {'method': 'PUT', 'isArray': false}
-                        }
+                globals.SITE_URL + '/db/index.php/rest/tripreports/:tripId',
+                {tripId:'@id'},
+                {
+                    update: {'method': 'PUT', 'isArray': false}
+                }
             );
         }
     ]);
     
     
-    // The interface to the CTC Images REST services
+    // The interface to the CTC TripImages REST services
     tripReportApp.factory('Image', ['$resource', 'globals',
         function($resource, globals) {
-            return $resource(globals.SITE_URL + '/db/index.php/rest/images/:imageId', {'imageId': '@id'});
+            return $resource(
+                    globals.SITE_URL + '/db/index.php/rest/tripimages/:imageId',
+                    {imageId:'@id'});
         }
     ]);
     
@@ -90,7 +92,9 @@
     // The interface to the CTC GPX REST services
     tripReportApp.factory('Gpx', ['$resource', 'globals',
         function($resource, globals) {
-            return $resource(globals.SITE_URL + '/db/index.php/rest/gpxs/:gpxId', {'gpxId': '@id'});
+            return $resource(
+                    globals.SITE_URL + '/db/index.php/rest/gpxs/:gpxId',
+                    {gpxId:'@id'});
         }
     ]);
 
@@ -107,7 +111,7 @@
             controller: 'TripsInYearController'
           }).
           when('/tripreports/create', {
-            templateUrl: 'partials/edit.html',
+            templateUrl: 'partials/editReport.html',
             controller: 'TripEditController'
           }).
           when('/tripreports/edit/:tripId', {

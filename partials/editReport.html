@@ -20,14 +20,13 @@ and open the template in the editor.
         very bottom of the page.</p>
         <p>Entering your trip report directly into the box isn't a good
         idea, because if something goes wrong you might lose the lot.
-        A much safer approach is prepare your
-        report on your own computer in your favourite editor and then copy and paste it into
-        the box below. You can then edit it, e.g. to add bold and
-        italic styles or to put back the paragraph
-        breaks that go missing if you use a raw text editor like Notepad.
-        But don't try to use the fancier capabilities of the box, like
-        inserting images in the middle of the main body of text, as they don't work!
-        </p>
+        A much safer approach is first prepare your
+        report on your own computer in your favourite editor, then copy and
+        paste it into the panel below and then reformat as required. 
+        [If you use Microsoft Word to edit the original, 
+        you should use the icon at the top left of the edit panel - the
+        one like a clipboard with a small 'W' in it - to paste your report.]
+                </p>
         
         <!-- ============================================================= -->
         <h3>Title, date, etc</h3>
@@ -145,7 +144,7 @@ and open the template in the editor.
                                       aria-hidden="true"></span>
                             </div>
                             <div style='display:inline-block' ng-model="tripReport[resource + 's'][$index]">
-                                <a ng-if="resourceType != 'gpx'" 
+                                <a ng-if="resourceType != 'gpx' && (resource.id !== 0 || resource.loaded)" 
                                    href='{{imageUrl(resourceType, $index, false)}}'
                                    target='_blank' >
                                     <img 
@@ -156,6 +155,9 @@ and open the template in the editor.
                                          title='{{resource.name}}'
                                     />
                                 </a>
+                                <span ng-if="resource.id == 0 && !resource.loaded">
+                                    Loading ...
+                                </span>
                                 <span ng-if="resourceType == 'gpx'">
                                     {{resource.name}}
                                 </span>

@@ -170,11 +170,11 @@
             }
 
             
-            $scope.downsize = function(imageDataUrl, resourceType, filename, sourceElement) {
-                // Downsize the given imageDataUrl so its maximum dimension
+            $scope.downsize = function(image) {
+                // Downsize the given image so its maximum dimension
                 // is globals.MAX_UPLOAD_IMAGE_DIMENSION. When done, set
-                // file.dataUrl to the rescaled value and set file.resizing to false.
-                // Scaling is done using an offscreen image and an offscreen
+                // image.dataUrl to the rescaled value and set image.resizing to
+                // false. Scaling is done using an offscreen image and an offscreen
                 // canvas. Since Canvas resize operations are bilinear, we
                 // scale by at most a factor of 2 on each scaling, iterating
                 // as necessary.
@@ -191,7 +191,7 @@
                              // Don't ever scale up and don't scale down by more than a
                              // factor of 2 per iteration.
                              actualRatio = Math.min(1, Math.max(ratio, globals.UPLOAD_IMAGE_QUALITY)),
-                             dataUrl;
+                             QUALITY = 0.6;
 
                          w = w * actualRatio;
                          h = h * actualRatio;
@@ -200,55 +200,57 @@
                          osCtx.drawImage(osImage, 0, 0, w, h);
                          if (ratio == actualRatio)  {
                              // Image is now the right size
-                             dataUrl = osCanvas.toDataURL("image/jpeg", 0.6);
-                             $scope.addResource(resourceType, filename, dataUrl);
-                             //alert('Image size = ' + dataUrl.length);
-                             sourceElement.value = '';  // Reset the file input for reuse
+                             image.dataUrl = osCanvas.toDataURL("image/jpeg", QUALITY);
+                             image.loaded = true;
                          } else {
                             // Go another round
                             osImage.src = osCanvas.toDataURL();
                          }
                     });
                 };
-                osImage.src = imageDataUrl;
+                osImage.src = image.dataUrl;
             }
             
             
-            $scope.addResource = function(resourceType, filename, dataUrl) {
-                // Adds a resource (image, map or gpx file) to the trip report.
-                // The resource must have been converted to a dataUrl first,
-                // ready for uploading.
+            $scope.addResource = function(resourceType, filename) {
+                // Adds a new resource (image, map or gpx file) to the trip report.
+                // At this stage the resource has not been uploaded so the
+                // dataUrl is set to null.
+                // Returns (a reference to) the new resource.
                 var resources = $scope.tripReport[resourceType + 's'],
                     file = {
                         'id'     : 0,
                         'caption': filename,
                         'name'   : filename,
-                        'dataUrl': dataUrl,
+                        'dataUrl': null,
+                        'loaded' : false,
                         'ordering': resources.length + 1 // 1-origin ordering
                     };
                 resources.push(file);
+                return file;
             }
             
-            
+ 
             $scope.fileSelected = function(event, files, resourceType) {
-                // Called when a file input is selected. Converts the
-                // file to a dataUrl (downsizing it if it's an image) and
-                // then adds it to the trip report.
-                var image,
-                    reader = new FileReader();
-            
+                // Called when a file input is selected. Adds the file to
+                // the list of resources, but with a zero id. Then initiates
+                // converting of the file to a dataUrl (downsizing it if
+                // it's an image).
+                var reader = new FileReader(), 
+                    file = $scope.addResource(resourceType, files[0].name);
+                       
                 reader.onload = function() {
                     $scope.$apply(function () {
-                        var resources = $scope.tripReport[resourceType + 's'];
-                        if (resourceType !== 'gpx') { // Downsise maps and images
-                            $scope.downsize(reader.result, resourceType, files[0].name, event.srcElement);
+                        file.dataUrl = reader.result;
+                        if (resourceType !== 'gpx') { // Downsize maps and images
+                            $scope.downsize(file);
                         } else {
-                            $scope.addResource(resourceType, files[0].name, reader.result);
-                            event.srcElement.value = ''; // Reset file input for another file
-                        };
+                            file.loaded = true;
+                        }
                     });
                 };    
                 reader.readAsDataURL(files[0]);
+                event.srcElement.value = '';  // Reset file input for another file
             };
             
             $scope.submitOrSave = function() {
@@ -259,38 +261,75 @@
             
             $scope.submit = function() {
                 // Handle a click on the submit/save button
+                
+                function validate() {
+                    return true;  // FIXME
+                }
+                
+                function uploadFile(file, service) {
+                    // Local function to upload an image or gpx file
+                    // to the server using the given service (a resource in
+                    // angular parlance).
+                    response = service.save(                        
+                        {name:      file.name,
+                         caption:   file.caption,
+                         dataUrl:   file.dataUrl
+                        }
+                    );
+                    response.$promise.then(function(data)  { 
+                            file.id = data.id;
+                        },
+                        function(error) {
+                            console.log('error', error); // FIXME
+                        }
+                    );
+                }    
 
-                // First, send all new resources to the server.
-                var i, resource, image, images;
+                // First, send all new files (images and gpxs) to the server.
+                var i, gpx, image, imageId, images, response;
                 
-                images = $scope.tripReport.images;
-                images.concat($scope.tripReport.maps);
-                for (i = 0; i < images.length; i++) {
-                    resource = images[i];
-                    if (resource.id === 0) {
-                        image = new imageService();
-                        image.name = resource.name;
-                        image.caption = resource.caption;
-                        image.dataUrl = resource.dataUrl;
-                        resource.id = image.$save();
-                        alert(resource.id);
+                if (!validate()) {
+                    alert("Form didn't validate. Fix it!");  // FIXME
+                } else {
+                
+                    // Images first
+                    images = $scope.tripReport.images;
+                    images = images.concat($scope.tripReport.maps);
+                    for (i = 0; i < images.length; i++) {
+                        image = images[i];
+                        if (image.id === 0) {
+                            uploadFile(image, imageService);
+                        }
+                    }
+
+                    // Now the gpx files
+                    for (i = 0; i < $scope.tripReport.gpxs.length; i++) {
+                        gpx = $scope.tripReport.gpxs[i];
+                        if (gpx.id === 0) {
+                            uploadFile(gpx, gpxService);
+                        }
+                    }
+
+                    // Next delete all deleted files
+                    for (i = 0; i < $scope.deletedImages.length; i++) {
+                        imageId = $scope.deletedImages[i];
+                        imageService.delete({imageId: imageId});  // TODO: error checking
+                    }
+                    $scope.deletedImages = [];  // Done, so clear the list
+                    
+                    for (i = 0; i < $scope.deletedGpxs.length; i++) {
+                        gpxService.delete({gpxId: $scope.deletedGpxs[i]}); // TODO: error checking
+                    }
+                    $scope.deletedGpxs = [];
+
+                    // Lastly save (if new) or update (otherwise) the actual
+                    // trip report.
+                    if ($scope.tripReport.id === 0) {
+                        $scope.tripReport.$save();
+                    } else {
+                        $scope.tripReport.$update();
                     }
                 }
-                
-                for (i = 0; i < $scope.tripReport.gpxs.length; i++) {
-                    resource = $scope.tripReport.gpxs[i];
-                    if (resource.id === 0) {
-                        gpxService.save(
-                            {name:    resource.name,
-                             caption: resource.caption,
-                             dataUrl: resource.dataUrl
-                             }
-                        );
-                        
-                    }
-                }
-                
-                // Next delete all deleted resources
                 
             };
             
@@ -300,8 +339,7 @@
                     $location.path('#');
                 }
             };
-     
-
+            
         }]);
   
   }());
