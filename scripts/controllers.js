@@ -94,8 +94,8 @@
     // =========================================================================
     // The controller for editing a trip report
     tripReportControllers.controller('TripEditController',
-            ['$scope', '$routeParams', '$location', 'globals', 'TripReport', 'Image', 'Gpx',
-        function($scope, $params, $location, globals, tripReportService, imageService, gpxService) {
+            ['$scope', '$routeParams', '$location', '$q', 'globals', 'TripReport', 'Image', 'Gpx',
+        function($scope, $params, $location, $q, globals, tripReportService, imageService, gpxService) {
             var id;
             if ($params.tripId == undefined) {
                 id = globals.tripId = 0;
@@ -269,36 +269,39 @@
                 function uploadFile(file, service) {
                     // Local function to upload an image or gpx file
                     // to the server using the given service (a resource in
-                    // angular parlance).
+                    // angular parlance). Return the promise of the upload.
+                    var promise;
                     response = service.save(                        
                         {name:      file.name,
                          caption:   file.caption,
                          dataUrl:   file.dataUrl
                         }
                     );
-                    response.$promise.then(function(data)  { 
+                    promise = response.$promise.then(function(data)  { 
                             file.id = data.id;
                         },
                         function(error) {
                             console.log('error', error); // FIXME
                         }
                     );
+                    return promise;
                 }    
 
                 // First, send all new files (images and gpxs) to the server.
-                var i, gpx, image, imageId, images, response;
+                var i, gpx, image, imageId, images, response, promises;
+                
                 
                 if (!validate()) {
                     alert("Form didn't validate. Fix it!");  // FIXME
                 } else {
-                
+                    promises = [];
                     // Images first
                     images = $scope.tripReport.images;
                     images = images.concat($scope.tripReport.maps);
                     for (i = 0; i < images.length; i++) {
                         image = images[i];
                         if (image.id === 0) {
-                            uploadFile(image, imageService);
+                            promises.push(uploadFile(image, imageService));
                         }
                     }
 
@@ -306,7 +309,7 @@
                     for (i = 0; i < $scope.tripReport.gpxs.length; i++) {
                         gpx = $scope.tripReport.gpxs[i];
                         if (gpx.id === 0) {
-                            uploadFile(gpx, gpxService);
+                            promises.push(uploadFile(gpx, gpxService));
                         }
                     }
 
@@ -321,17 +324,31 @@
                         gpxService.delete({gpxId: $scope.deletedGpxs[i]}); // TODO: error checking
                     }
                     $scope.deletedGpxs = [];
-
-                    // Lastly save (if new) or update (otherwise) the actual
-                    // trip report.
-                    if ($scope.tripReport.id === 0) {
-                        $scope.tripReport.$save();
-                    } else {
-                        $scope.tripReport.$update();
-                    }
+                    
+                    // When everything's uploaded save (if new) or update 
+                    // (otherwise) the actual trip report.
+                    $q.all(promises).then(function(result) {
+                        $scope.saveOrUpdate().then(
+                                function(result) { // Success
+                                    alert("Upload successful");
+                                },
+                                function(result) { // Fail
+                                    alert("Good try but no banana");
+                                }).finally(function() {
+                                    $scope.saving = false;
+                                });
+                    });
                 }
                 
             };
+            
+            $scope.saveOrUpdate = function() {
+                if ($scope.tripReport.id === 0) {
+                    return $scope.tripReport.$save();
+                } else {
+                    return $scope.tripReport.$update();
+                }
+            }
             
             $scope.cancel = function() {
                 // Handle a click on the cancel button

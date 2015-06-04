@@ -72,7 +72,9 @@
                 globals.SITE_URL + '/db/index.php/rest/tripreports/:tripId',
                 {tripId:'@id'},
                 {
-                    update: {'method': 'PUT', 'isArray': false}
+                    save:   {'method': 'POST',   'withCredentials': true},
+                    update: {'method': 'PUT',    'withCredentials': true},
+                    remove: {'method': 'DELETE', 'withCredentials': true}
                 }
             );
         }
@@ -83,8 +85,13 @@
     tripReportApp.factory('Image', ['$resource', 'globals',
         function($resource, globals) {
             return $resource(
-                    globals.SITE_URL + '/db/index.php/rest/tripimages/:imageId',
-                    {imageId:'@id'});
+                globals.SITE_URL + '/db/index.php/rest/tripimages/:imageId',
+                {imageId:'@id'},
+                {
+                    save:   {'method': 'POST',   'withCredentials': true},
+                    remove: {'method': 'DELETE', 'withCredentials': true}
+                }
+            );
         }
     ]);
     
@@ -93,8 +100,13 @@
     tripReportApp.factory('Gpx', ['$resource', 'globals',
         function($resource, globals) {
             return $resource(
-                    globals.SITE_URL + '/db/index.php/rest/gpxs/:gpxId',
-                    {gpxId:'@id'});
+                globals.SITE_URL + '/db/index.php/rest/gpxs/:gpxId',
+                {gpxId:'@id'},
+                {
+                    save:   {'method': 'POST',   'withCredentials': true},
+                    remove: {'method': 'DELETE', 'withCredentials': true}
+                }
+            );
         }
     ]);
 
