@@ -134,6 +134,10 @@
             templateUrl: 'partials/tripreport.html',
             controller: 'TripShowController'
           }).
+          when('/tripreports/delete/:tripId', {
+            templateUrl: 'partials/tripreport.html',
+            controller: 'TripShowController'
+          }).
           otherwise({
             redirectTo: '/tripreports'
           });

@@ -12,6 +12,7 @@ and open the template in the editor.
     </head>
     <body>
        <h2 class="tripReportFormHdr">Trip Report Form</h2>
+        <form class="css-form" novalidate>
         <p>Welcome to the new trip report system. Please <a href="mailto:richard.lobb@canterbury.ac.nz">email me</a>
         if you have any problems.</p>
         <p>Please fill in the title, trip start date and duration fields below, then enter your trip report
@@ -30,57 +31,76 @@ and open the template in the editor.
         
         <!-- ============================================================= -->
         <h3>Title, date, etc</h3>
-        <dl class="dl-horizontal">
+        <table class="table table-nonfluid">
+            <tr>
+                <td>Title (excluding date):</td>
+                <td><input name="title" type="text" size="50" ng-model="tripReport.title" ngRequired
+                           class="{{titleClass()}}"/>
+                    <br />e.g., "The Ascent of Rumdoodle"</td>
+            </tr>
             
-            <dt>Title (excluding date):</dt>
-            <dd><input type="text" size="50" ng-model="tripReport.title" />
-                <br />e.g., "The Ascent of Rumdoodle"
-            </dd>
+            <tr>
+                <td>Trip type:</td>
+                <td>
+                    <select ng-model="tripReport.trip_type">
+                        <option value="club">club</option>
+                        <option value="private">private</option>
+                    </select>
+                </td>
+            </tr>
             
-            <dt>Trip type:</dt>
-            <dd>
-                <select ng-model="tripReport.trip_type">
-                <option value="club">club</option>
-                <option value="private">private</option>
-                </select>
-            </dd>
-            
-            <dt>Trip start date:</dt>
-            <dd>
-                Day: <select class="selectday"
+            <tr>
+                <td>Trip start date:</td>
+                <td>
+                    Day: <select class="selectday"
                              ng-options="day for day in range(1, 32) track by day.toString()"
                              ng-model="tripReport.day">
-                </select>&nbsp;&nbsp;&nbsp;
-                Month: <select class="selectmonth"
+                        <option value="">-- Select day --</option>
+                        </select>&nbsp;&nbsp;&nbsp;
+                    Month: <select class="selectmonth"
                              ng-options="month for month in range(1, 13) track by month.toString()"
                              ng-model="tripReport.month">
-                </select>&nbsp;&nbsp;
-                Year: <input type="text" size="4" ng-model="tripReport.year" />
-            </dd>
+                            <option value="">-- Select month --</option>
+                            </select>&nbsp;&nbsp;
+                    Year: <input type="text" size="4" ng-model="tripReport.year" required />
+                </td>
+            </tr>
         
-            <dt>Trip Length (days):</dt>
-            <dd>
-                <select ng-options="duration for duration in range(1, 30) track by duration.toString()"
-                        ng-model="tripReport.duration">
-                </select>
-                1 for day trip, 2 for overnight, etc.
-                </dd>
-                
-            <dt title="Click the checkbox to set an explicit date rather than autogenerate it from the above info">
-                Explicit date:</dt>
-            <dd>
-                <input type="checkbox"
-                       ng-model="tripReport.user_set_date_display" />
-                <input ng-if="tripReport.user_set_date_display"
-                       size="30"
-                       type="text" name="date_display"
-                       ng-model="tripReport.date_display" />
-            </dd>
-        </dl>
+            <tr>
+                <td>Trip Length (days):</td>
+                <td>
+                    <select ng-options="duration for duration in range(1, 30) track by duration.toString()"
+                            ng-model="tripReport.duration" required>
+                        <option value="">-- Select duration --</option>
+                    </select>&nbsp;&nbsp;
+                    1 for day trip, 2 for overnight, etc.
+                </td>
+            </tr>
+            
+            <tr  ng-show="badSubmittedDate()" class="error">
+                <td></td>
+                <td>Please select start date and duration</td>
+            </tr>
+               
+            <tr>
+                <td title="Click the checkbox to set an explicit date rather than autogenerate it from the above info">
+                    Explicit date:</td>
+                <td>
+                    <input type="checkbox"
+                           ng-model="tripReport.user_set_date_display"
+                           ng-change='updateDateDisplay()'/>
+                    <input ng-if="tripReport.user_set_date_display == 1"
+                           size="30"
+                           type="text" name="date_display"
+                           ng-model="tripReport.date_display" />
+                </td>
+            </tr>
+        </table>
         <!-- ============================================================= -->
         <h3>Body of trip report</h3>
 
         <textarea ng-model="tripReport.body" ck-editor></textarea>
+        <p ng-show="emptyBody()" class="error">Empty trip report!</p>
 
         <!-- ============================================================= -->
 
@@ -108,7 +128,7 @@ and open the template in the editor.
                 like <i>Freshmap</i> or <i>Topomap</i>.
                 </p>
 
-                <p>
+                <p ng-if="resources.length > 0">
                 Copyright notice (amend as appropriate):
                 <input type="text" size="60" ng-model="tripReport.map_copyright" />
                 </p>
@@ -122,6 +142,7 @@ and open the template in the editor.
             <div class="tripReportFiles"
                  id="{{resourceType}}resources" >
                 <table id="{{resourceType}}-table"
+                       ng-if="resources.length > 0"
                        class="{{resourceType}}-table  resourcetable">
                     <tr>
                         <th>{{capitalise(resourceType)}}</th>
@@ -206,6 +227,6 @@ and open the template in the editor.
                ng-click="cancel()"
         />
         </p>
-
+    </form>
     </body>
 </html>

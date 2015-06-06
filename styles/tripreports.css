@@ -9,6 +9,14 @@ body {
     padding-top: 50px;
 }
 
+.error {
+   background-color: #FA787E;
+}
+
+.table-nonfluid {
+   width: auto !important;
+}
+
 .navbar-brand {
     font-size: 36px;
     color: white !important; 

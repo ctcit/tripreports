@@ -15,7 +15,8 @@ and open the template in the editor.
             <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
     
             <h2>{{tripReport.date_display}}: {{tripReport.title}}</h2>
-            <div class='tripimages' ng-if='tripReport.images'>
+        
+            <div class='tripimages' ng-if='tripReport.images.length > 0'>
                 <h3>Trip Photos</h3>
                 <div ng-repeat='i in range(numImageRows)' class="row">
                     <div ng-repeat='col in range(3)'>
@@ -31,31 +32,31 @@ and open the template in the editor.
                 </div>
             </div>
         
-            <dl>
-                <div class='tripgpxs' ng-if='tripReport.gpxs'>
 
-                    <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
-                    <ul class="list-unstyled">
-                    <li ng-repeat='gpx in tripReport.gpxs'>
-                        <span ng-bind-html='itemCaption(gpx) | unsafe'></span>
-                        <a href="{{globals.SITE_URL}}/dbgpx.php?id={{gpx.id}}">
-                            Download file</a>&nbsp;
-                        <a href='{{globals.SITE_URL}}' target="_blank">View on Topomap</a>
-                    </li>
-                    </ul>
-                </div>
+            <div class='tripgpxs' ng-if='tripReport.gpxs.length > 0'>
 
-                <div class='tripmaps' ng-if='tripReport.maps'>
-                    <h4>{{pluralise('Trip map', numMaps)}}:</h4>
-                    <ul class="list-unstyled">
-                    <li ng-repeat='map in tripReport.maps'>
-                        <span ng-bind-html='itemCaption(map) | unsafe'></span>
-                        <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'/>
-                        {{map.name}}</a>
-                    </li>
-                    </ul>
-                </div>
-            </dl>
+                <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
+                <ul class="list-unstyled">
+                <li ng-repeat='gpx in tripReport.gpxs'>
+                    <span ng-bind-html='itemCaption(gpx) | unsafe'></span>
+                    <a href="{{globals.SITE_URL}}/dbgpx.php?id={{gpx.id}}">
+                        Download file</a>&nbsp;
+                    <a href='{{globals.SITE_URL}}' target="_blank">View on Topomap</a>
+                </li>
+                </ul>
+            </div>
+
+            <div class='tripmaps' ng-if='tripReport.maps.length > 0'>
+                <h4>{{pluralise('Trip map', numMaps)}}:</h4>
+                <ul class="list-unstyled">
+                <li ng-repeat='map in tripReport.maps'>
+                    <span ng-bind-html='itemCaption(map) | unsafe'></span>
+                    <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'/>
+                    {{map.name}}</a>
+                </li>
+                </ul>
+            </div>
+
             
             <p ng-if='numGpxs + numMaps > 0'>
                 Note: A CTC map image or a GPX route shows the approximate
