@@ -130,11 +130,7 @@
             templateUrl: 'partials/editReport.html',
             controller: 'TripEditController'
           }).
-          when('/tripreports/:tripId', {
-            templateUrl: 'partials/tripreport.html',
-            controller: 'TripShowController'
-          }).
-          when('/tripreports/delete/:tripId', {
+          when('/tripreports/:showordelete/:tripId', {
             templateUrl: 'partials/tripreport.html',
             controller: 'TripShowController'
           }).

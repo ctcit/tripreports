@@ -25,16 +25,29 @@
     // =========================================================================
     // The controller for the view of a particular trip
     tripReportControllers.controller('TripShowController',
-            ['$scope', '$routeParams', 'globals', 'TripReport',
-                function($scope, $params, globals, tripReportService) {
+            ['$scope', '$routeParams', '$location', 'globals', 'TripReport',
+                function($scope, $params, $location, globals, tripReportService) {
             globals.tripId = $params.tripId;
-
             
-            $scope.tripReport = tripReportService.get({'tripId': $params.tripId}, function(tripReport) {
-                $scope.numImageRows = Math.ceil(tripReport.images.length / 4);
+            $scope.tripReport = tripReportService.get({'tripId': $params.tripId},
+            function(tripReport) {
+                $scope.numImageRows = Math.ceil(tripReport.images.length / 3);
                 $scope.numImages = tripReport.images.length;
                 $scope.numMaps = tripReport.maps.length;
                 $scope.numGpxs = tripReport.gpxs.length;
+
+                if ($params.showordelete === 'delete') {
+                    if (confirm('Completely delete trip report "' + tripReport.title +
+                            '"? This cannot be undone. Are you quite sure?')) {
+                        tripReportService.remove({'tripId': $params.tripId}, function(tripReport) {
+                            alert("Report has been deleted");
+                            $location.url('/tripreports/');
+                        })
+                          
+                    }
+                }
+            }, function(response) {
+                alert("Couldn't fetch trip report (" + response.status + "). A network problem?");
             });
 
 
@@ -67,6 +80,8 @@
             $http.get(url).then(function (response) {
                 $scope.triplist = response.data;
                 $scope.loading = false;
+            }, function(response) {
+                alert("Couldn't fetch trip reports (" + response.status + "). A network problem?");
             });
         }]);
     
@@ -83,6 +98,8 @@
                 $scope.recentOnly = true;
                 $scope.years = response.data;
                 $scope.numYears = NUM_RECENT;
+            }, function(response) {
+                alert("Couldn't fetch trip report years. A network problem?");
             });
             
             // Update numYears if recentOnly changes
@@ -111,6 +128,8 @@
             $scope.tripReport = tripReportService.get({'tripId': id}, function(tripReport) {
                 // Set resource types in here so template processes resources now
                 $scope.resourceTypes = ['image', 'gpx', 'map'];  
+            }, function(response) {
+                alert("Couldn't fetch trip report (" + response.status + "). A network problem?");
             });
             
         
@@ -392,15 +411,16 @@
                     
                     // Now save save (if new) or update 
                     // (otherwise) the actual trip report.
-                    $q.all(promises).catch(function() {
-                        alert("Deletion of an image or gpx failed. Something may have gone wrong. Check the result carefully");
+                    $q.all(promises).catch(function(response) {
+                        alert("Deletion of an image or gpx failed (" + response.status + "). Check the result carefully");
                     }).finally(function(result) {
                         $scope.saveOrUpdate().then(
                                 function(result) { // Success
-                                    alert("Upload successful"); // TODO redirect
+                                    alert("Upload successful");
+                                    $location.url('/tripreports/show/' + $scope.tripReport.id);
                                 },
-                                function(error) { // Fail
-                                    alert("Trip report upload failed with error: " + JSON.stringify(error));
+                                function(response) { // Fail
+                                    alert("Trip report upload failed with error " + response.status + ' ' + response.data);
                                 }).finally(function() {
                                     $scope.saving = false;
                                 });

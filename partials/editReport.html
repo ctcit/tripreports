@@ -13,9 +13,11 @@ and open the template in the editor.
     <body>
        <h2 class="tripReportFormHdr">Trip Report Form</h2>
         <form class="css-form" novalidate>
-        <p>Welcome to the new trip report system. Please <a href="mailto:richard.lobb@canterbury.ac.nz">email me</a>
+        <p>Welcome to the new trip report system.
+        Please <a href="mailto:richard.lobb@canterbury.ac.nz">email me</a>
         if you have any problems.</p>
-        <p>Please fill in the title, trip start date and duration fields below, then enter your trip report
+        <p>Please fill in the title, trip start date and duration fields below
+        then enter your trip report
         into the box labelled "Body of trip report". Add any photos, maps and GPX files
         (all optional) and finish by clicking the "Submit trip report" button at the
         very bottom of the page.</p>
@@ -198,9 +200,9 @@ and open the template in the editor.
                         </td>
 
                         <td>
-                            <input class="caption-input" type="text" name="imagecaption[]"
+                            <input class="caption-input" type="text"
                                    placeholder="Enter a caption"
-                                   value="{{trusted(resource.caption)}}" />
+                                   ng-model="resource.caption" />
                         </td>
                     </tr>
                 </table>
