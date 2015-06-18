@@ -36,30 +36,34 @@ and open the template in the editor.
             <div class='tripgpxs' ng-if='tripReport.gpxs.length > 0'>
 
                 <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
-                <ul class="list-unstyled">
+                <ul class="list-unstyled gpx-files">
                 <li ng-repeat='gpx in tripReport.gpxs'>
-                    <span ng-bind-html='itemCaption(gpx) | unsafe'></span>
+                    <span ng-bind-html='itemCaption(gpx) | unsafe'></span>: 
                     <a href="{{globals.SITE_URL}}/dbgpx.php?id={{gpx.id}}">
                         Download file</a>&nbsp;
-                    <a href='{{globals.SITE_URL}}' target="_blank">View on Topomap</a>
+                    <a href='{{topomapLink(gpx.id)}}' target="_blank">View on Topomap</a>
                 </li>
                 </ul>
             </div>
 
             <div class='tripmaps' ng-if='tripReport.maps.length > 0'>
-                <h4>{{pluralise('Trip map', numMaps)}}:</h4>
-                <ul class="list-unstyled">
-                <li ng-repeat='map in tripReport.maps'>
-                    <span ng-bind-html='itemCaption(map) | unsafe'></span>
-                    <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'/>
-                    {{map.name}}</a>
-                </li>
-                </ul>
+                <h4>{{pluralise('Route map', numMaps)}}:</h4>
+                <div class="map-links">
+                    <span ng-repeat='map in tripReport.maps'>
+                        <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'>
+                        <span ng-bind-html='itemCaption(map) | unsafe'></span>
+                        </a>
+                        <span ng-if="!$last">, </span>
+                        <span ng-if="$last" class="copyright"> ({{tripReport.map_copyright}})</span>
+
+                    </span>
+                </div>
+                
             </div>
 
             
-            <p ng-if='numGpxs + numMaps > 0'>
-                Note: A CTC map image or a GPX route shows the approximate
+            <p class="disclaimer" ng-if='numGpxs + numMaps > 0'>
+                <em>Note:</em> A CTC map image or a GPX route shows the approximate
                 route taken by a particular party on a particular day.
                 It should not be regarded as a recommended route or even
                 necessarily a good route. Also, permission from land-owners
@@ -69,7 +73,7 @@ and open the template in the editor.
             <h3 ng-if='numGpxs + numMaps + numImages > 0'>Trip Report</h3>
             <div class='reportbody' ng-bind-html='tripReport.body | unsafe'>
             </div>
-            <p>--Uploaded by: {{tripReport.uploader_name}}</p
+            <p>--Uploaded by: {{tripReport.uploader_name}} on {{uploadDate()}}</p>
         </div>
     </body>
 </html>

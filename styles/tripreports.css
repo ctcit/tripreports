@@ -52,6 +52,19 @@ table.image-table th {
     border-collapse: collapse;
 }
 
+.map-links, .gpx-files {
+    padding-left: 20px;
+}
+
+p.disclaimer {
+    padding-top: 10px;
+}
+
+.copyright {
+    padding-left: 5px;
+}
+
+
 table.resourcetable {
     margin-bottom: 10px;
 }

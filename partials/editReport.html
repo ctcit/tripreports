@@ -155,6 +155,7 @@ and open the template in the editor.
                         <td>
                             <div style='display:inline-block'>
                                 <button ng-if="!$first && resource.name !== ''"
+                                        type="button"
                                         title='Move up'
                                         ng-click="moveUp(resourceType, $index)">
                                 <span class="glyphicon glyphicon-arrow-up"
@@ -162,6 +163,7 @@ and open the template in the editor.
                                 </button>
                                 <br>
                                 <button ng-if="!$last"
+                                        type="button"
                                         title='Move down'ng-click="moveDown(resourceType, $index)">
                                 <span class="glyphicon glyphicon-arrow-down"
                                       aria-hidden="true"></span>

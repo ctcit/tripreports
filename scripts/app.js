@@ -57,10 +57,11 @@
     
     tripReportApp.factory('globals', function() {
         var globals = {
-            SITE_URL: 'http://192.168.20.22/ctc',
+            SITE_URL: 'http://csse-rjl83-l2/ctc',
             MAX_UPLOAD_IMAGE_DIMENSION: 1000, // Max width or height in pixels
             UPLOAD_IMAGE_QUALITY: 0.6,
-            tripId: 0  // The ID of the trip report currently being shown or edited
+            tripId: 0,  // The ID of the trip report currently being shown or edited
+            tripReportScope: null // The scope of the trip report controller (if present)
         };
         return globals;
     })
@@ -109,12 +110,24 @@
             );
         }
     ]);
+    
+    // The interface to the CTC user REST service, which provides only a
+    // GET to obtain the currently-logged in user (i.e., the user who
+    // has authenticated on the main CTC website on the same machine as
+    // the one on which this code is running).
+    tripReportApp.factory('User', ['$resource', 'globals',
+        function($resource, globals) {
+            return $resource(
+                globals.SITE_URL + '/db/index.php/rest/user'
+            );
+        }
+    ]);
 
     // Route provider
     tripReportApp.config(['$routeProvider',
       function($routeProvider) {
         $routeProvider.
-          when('/tripreports', {
+          when('/', {
             templateUrl: 'partials/tripreportyears.html',
             controller: 'TripYearsController'
           }).
@@ -122,20 +135,20 @@
             templateUrl: 'partials/tripreportlist.html',
             controller: 'TripsInYearController'
           }).
-          when('/tripreports/create', {
+          when('/create', {
             templateUrl: 'partials/editReport.html',
             controller: 'TripEditController'
           }).
-          when('/tripreports/edit/:tripId', {
+          when('/edit/:tripId', {
             templateUrl: 'partials/editReport.html',
             controller: 'TripEditController'
           }).
-          when('/tripreports/:showordelete/:tripId', {
+          when('/:showordelete/:tripId', {
             templateUrl: 'partials/tripreport.html',
             controller: 'TripShowController'
           }).
           otherwise({
-            redirectTo: '/tripreports'
+            redirectTo: '/'
           });
       }]);
   

@@ -40,18 +40,18 @@
         <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
           <ul class="nav navbar-nav">
             <li ng-class="{ active: isActive('/tripreports') || isActive('/tripreportsforyear/.*') }">
-                <a href="#/tripreports/">Browse</a></li>
-            <li ng-class="{ active: isActive('/tripreports/edit') }"
+                <a href="#//">Browse</a></li>
+            <li ng-class="{ active: isActive('/tripreports') }"
                 ng-if="globals.tripId" id='edit'>
-                <a href="#/tripreports/edit/{{globals.tripId}}">Edit</a>
+                <a href="" ng-click="globals.tripReportScope.editReport()">Edit</a>
             </li>
             <li ng-class="{ active: isActive('/tripreports/edit') }"
                 ng-if="globals.tripId" id='delete'>
-                <a href="#/tripreports/delete/{{globals.tripId}}">Delete</a>
+                <a href="" ng-click="globals.tripReportScope.deleteReport()">Delete</a>
             </li>
             <li ng-class="{ active: isActive('/tripreports/create') }"
                 ng-if="globals.tripId==0" id='create'>
-                <a href="#/tripreports/create">Create</a>
+                <a href="#/create">Create</a>
             </li>
           </ul>
         </div>
