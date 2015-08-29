@@ -136,8 +136,7 @@
                         'caption': filename,
                         'name'   : filename,
                         'dataUrl': null,
-                        'loaded' : false,
-                        'ordering': resources.length + 1 // 1-origin ordering
+                        'loaded' : false
                     };
                 resources.push(file);
                 return file;
