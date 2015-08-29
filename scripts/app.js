@@ -57,7 +57,7 @@
     
     tripReportApp.factory('globals', function() {
         var globals = {
-            SITE_URL: 'http://csse-rjl83-l2/ctc',
+            SITE_URL: 'http://localhost/ctc',
             MAX_UPLOAD_IMAGE_DIMENSION: 1000, // Max width or height in pixels
             UPLOAD_IMAGE_QUALITY: 0.6,
             tripId: 0,  // The ID of the trip report currently being shown or edited
