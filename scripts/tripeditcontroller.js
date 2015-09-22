@@ -308,7 +308,7 @@
                     }).finally(function(result) {
                         $scope.saveOrUpdate().then(
                                 function(result) { // Success
-                                    alert("Upload successful");
+                                    //alert("Upload successful");
                                     $location.url('/show/' + id);
                                 },
                                 function(response) { // Fail
