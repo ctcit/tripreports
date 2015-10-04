@@ -3,12 +3,11 @@
     'use strict';
 
     angular.module('tripReportApp').controller('TripYearsController',
-        ['$scope', '$routeParams', '$http', 'globals', 
-        function($scope, $params, $http, globals) {
-            var url = globals.SITE_URL + '/db/index.php/rest/tripreportyears',
+        ['$scope', '$routeParams', '$http', 'currentTripReportService', 'site',
+        function ($scope, $params, $http, currentTripReportService, site) {
+            var url = site.URL + '/db/index.php/rest/tripreportyears',
                 NUM_RECENT = 10;  // The number of years to show by default
-            globals.tripId = 0;
-            globals.tripReportScope = null;
+            currentTripReportService.clear();
             $scope.numYears = 0;
             $http.get(url).then(function (response) {
                 $scope.recentOnly = true;

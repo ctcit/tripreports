@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -21,10 +21,10 @@ and open the template in the editor.
                 <div ng-repeat='i in range(numImageRows)' class="row">
                     <div ng-repeat='col in range(3)'>
                         <div ng-if='3 * i + col < numImages' class="col-xs-4 tripimage">
-                            <a href='{{globals.SITE_URL}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
+                            <a href='{{siteURL}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
                                target='_blank'>
                             <img class='img-thumbnail' 
-                                ng-src="{{globals.SITE_URL}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}"/>
+                                ng-src="{{siteURL}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}"/>
                             </a>
                             <p><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
                         </div>
@@ -39,7 +39,7 @@ and open the template in the editor.
                 <ul class="list-unstyled gpx-files">
                 <li ng-repeat='gpx in tripReport.gpxs'>
                     <span ng-bind-html='itemCaption(gpx) | unsafe'></span>: 
-                    <a href="{{globals.SITE_URL}}/dbgpx.php?id={{gpx.id}}">
+                    <a href="{{siteURL}}/dbgpx.php?id={{gpx.id}}">
                         Download file</a>&nbsp;
                     <a href='{{topomapLink(gpx.id)}}' target="_blank">View on Topomap</a>
                 </li>
@@ -50,7 +50,7 @@ and open the template in the editor.
                 <h4>{{pluralise('Route map', numMaps)}}:</h4>
                 <div class="map-links">
                     <span ng-repeat='map in tripReport.maps'>
-                        <a href="{{globals.SITE_URL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'>
+                        <a href="{{siteURL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'>
                         <span ng-bind-html='itemCaption(map) | unsafe'></span>
                         </a>
                         <span ng-if="!$last">, </span>

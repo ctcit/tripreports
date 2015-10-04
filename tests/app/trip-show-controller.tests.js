@@ -4,13 +4,14 @@ describe('TripShowController: ', function () {
     var $scope;
     var createController;
     var $httpBackend;
-    var globals;
+    var site;
+    var currentTripReportService;
 
     //mock Application to allow us to inject our own dependencies
     beforeEach(angular.mock.module('tripReportApp'));
 
     //mock the controller for the same reason and include $rootScope and $controller
-    beforeEach(angular.mock.inject(function ($rootScope, $controller, _$httpBackend_, _globals_) {
+    beforeEach(angular.mock.inject(function ($rootScope, $controller, _$httpBackend_, _site_, _currentTripReportService_) {
         //create an empty scope
         $scope = $rootScope.$new();
 
@@ -19,7 +20,8 @@ describe('TripShowController: ', function () {
         };
 
         $httpBackend = _$httpBackend_;
-        globals = _globals_;
+        site = _site_;
+        currentTripReportService = _currentTripReportService_;
     }));
 
     var tripDetails = {
@@ -60,11 +62,11 @@ describe('TripShowController: ', function () {
 
     beforeEach(function () {
         $httpBackend
-            .when('GET', globals.SITE_URL + '/db/index.php/rest/tripreports/' + tripDetails.id)
+            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails.id)
             .respond(tripDetails);
 
         $httpBackend
-            .when('GET', globals.SITE_URL + '/db/index.php/rest/user')
+            .when('GET', site.URL + '/db/index.php/rest/user')
             .respond({ "id": 0 });
         
         controller = createController(tripDetails.id);
@@ -79,7 +81,7 @@ describe('TripShowController: ', function () {
 
     // tests start here
     it('should return the details for the specified trip', function () {
-        expect(globals.tripId).toEqual(tripDetails.id);
+        expect(currentTripReportService.get().id).toEqual(tripDetails.id);
     });
 
 });

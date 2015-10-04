@@ -3,22 +3,22 @@
 (function () {
     'use strict';
     angular.module('tripReportApp').controller('TripEditController',
-        ['$scope', '$routeParams', '$location', '$q', 'globals', 'TripReport', 'Image', 'Gpx',
-        function($scope, $params, $location, $q, globals, tripReportService, imageService, gpxService) {
-            var id;
-            if ($params.tripId == undefined) {
-                id = globals.tripId = 0;
-            } else {
-                id = globals.tripId = $params.tripId;
-            }
-            globals.tripReportScope = null;
-            
+        ['$scope', '$routeParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
+        function ($scope, $params, $location, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
+
+            var MAX_UPLOAD_IMAGE_DIMENSION = 1000; // Max width or height in pixels
+            var UPLOAD_IMAGE_QUALITY = 0.6;
+
+            var currentTripReport = currentTripReportService.get();
+            var id = ($params.tripId != undefined) ? $params.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
             $scope.deletedImages = [];
             $scope.deletedGpxs = [];
             $scope.submissionErrors = false;
          
-            $scope.tripReport = tripReportService.get({'tripId': id}, function(tripReport) {
+            tripReportService.get({ 'tripId': id }, function (tripReport) {
+                currentTripReportService.set(tripReport);
+                $scope.tripReport = tripReport;
                 // Set resource types in here so template processes resources now
                 $scope.resourceTypes = ['image', 'gpx', 'map'];  
             }, function(response) {
@@ -35,9 +35,9 @@
                     if (image.id == 0) {  // Local?
                         return image.dataUrl ? image.dataUrl : '';
                     } else if (thumbReqd) {
-                        return globals.SITE_URL + '/dbthumb.php?id=' + image.id;
+                        return site.URL + '/dbthumb.php?id=' + image.id;
                     } else {
-                        return globals.SITE_URL + '/dbcaptionedimage.php?id=' + image.id;
+                        return site.URL + '/dbcaptionedimage.php?id=' + image.id;
                     }
                 }
             } 
@@ -85,7 +85,7 @@
             
             $scope.downsize = function(image) {
                 // Downsize the given image so its maximum dimension
-                // is globals.MAX_UPLOAD_IMAGE_DIMENSION. When done, set
+                // is MAX_UPLOAD_IMAGE_DIMENSION. When done, set
                 // image.dataUrl to the rescaled value and set image.resizing to
                 // false. Scaling is done using an offscreen image and an offscreen
                 // canvas. Since Canvas resize operations are bilinear, we
@@ -100,10 +100,10 @@
                         // in the off-screen canvas.
                         var  w = osImage.width,
                              h = osImage.height,
-                             ratio = globals.MAX_UPLOAD_IMAGE_DIMENSION / Math.max(w, h),
+                             ratio = MAX_UPLOAD_IMAGE_DIMENSION / Math.max(w, h),
                              // Don't ever scale up and don't scale down by more than a
                              // factor of 2 per iteration.
-                             actualRatio = Math.min(1, Math.max(ratio, globals.UPLOAD_IMAGE_QUALITY)),
+                             actualRatio = Math.min(1, Math.max(ratio, UPLOAD_IMAGE_QUALITY)),
                              QUALITY = 0.6;
 
                          w = w * actualRatio;

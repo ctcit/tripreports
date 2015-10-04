@@ -4,14 +4,13 @@
     'use strict';
 
     angular.module('tripReportApp').controller('TripsInYearController',
-        ['$scope', '$routeParams', '$http', 'globals',
-        function($scope, $params, $http, globals) {
-            var url = globals.SITE_URL + '/db/index.php/rest/yearstripreports/' + $params.year;
+        ['$scope', '$routeParams', '$http', 'currentTripReportService', 'site',
+        function ($scope, $params, $http, currentTripReportService, site) {
+            var url = site.URL + '/db/index.php/rest/yearstripreports/' + $params.year;
                 //NUM_RECENT = 10,
                 //i = 0;
                 
-            globals.tripId = 0;
-            globals.tripReportScope = null;
+            currentTripReportService.clear();
             $scope.year = $params.year;
             $scope.loading = true;
             $http.get(url).then(function (response) {

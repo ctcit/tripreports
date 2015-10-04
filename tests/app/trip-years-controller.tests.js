@@ -4,13 +4,13 @@ describe('TripYearsController: ', function () {
     var $scope;
     var createController;
     var $httpBackend;
-    var globals;
+    var site;
 
     //mock Application to allow us to inject our own dependencies
     beforeEach(angular.mock.module('tripReportApp'));
 
     //mock the controller for the same reason and include $rootScope and $controller
-    beforeEach(angular.mock.inject(function ($rootScope, $controller, _$httpBackend_, _globals_) {
+    beforeEach(angular.mock.inject(function ($rootScope, $controller, _$httpBackend_, _site_) {
         //create an empty scope
         $scope = $rootScope.$new();
 
@@ -19,7 +19,7 @@ describe('TripYearsController: ', function () {
         };
 
         $httpBackend = _$httpBackend_;
-        globals = _globals_;
+        site = _site_;
     }));
 
 
@@ -29,7 +29,7 @@ describe('TripYearsController: ', function () {
 
     beforeEach(function () {
         $httpBackend
-            .when('GET', globals.SITE_URL + '/db/index.php/rest/tripreportyears')
+            .when('GET', site.URL + '/db/index.php/rest/tripreportyears')
             .respond(years);
 
         controller = createController();
