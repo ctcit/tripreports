@@ -15,7 +15,7 @@
 
 
     angular.module('tripReportApp').controller('NavBarController',
-        ['$rootScope', '$location', 'currentUserService', 'currentTripReportService',
+        ['$rootScope', '$location', 'currentUser', 'currentTripReportService',
         function ($rootScope, $location, currentUserService, currentTripReportService) {
 
             $rootScope.currentTripReport = currentTripReportService.get();
@@ -26,9 +26,6 @@
                 // the current location
                 return new RegExp('^' + viewLocation + '$').test($location.path());
             };
-
-            // Todo: should really be done as part of $routeProvider resolve
-            currentUserService.load();
 
             $rootScope.editReport = function () {
                 // Switch to the edit page if user is authenticated and authorised.

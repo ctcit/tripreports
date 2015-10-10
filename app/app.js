@@ -6,6 +6,7 @@
     var tripReportApp = angular.module('tripReportApp', [
       'ngRoute',
       'ngResource',
+      'ui.router',
       'tripReportControllers'
     ]);
     

@@ -19,10 +19,12 @@
                     return $http.get(site.URL + '/db/index.php/rest/user')
                         .success(function (user) {
                             currentUser = user;
+                            return currentUser;
                         })
                        .error(function (fail) {
                            currentUser = null;
                            alert("Couldn't fetch user info (" + fail.status + "). A network problem?");
+                           return currentUser;
                        })
                 }
             }

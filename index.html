@@ -12,11 +12,13 @@
     <!-- Third-party scripts -->
     <script src="third-party/angular.js"></script>
     <script src="third-party/angular-route.js"></script>
+    <script src="third-party/angular-ui-router.js"></script>
     <script src="third-party/angular-resource.js"></script>
 
-    <!-- Our app scripts scripts -->
+    <!-- Our app scripts -->
     <script src="app/app.js"></script>
     <script src="app/controllers.js"></script>
+    <script src="app/config/states.js"></script>
     <script src="app/config/routes.js"></script>
     <script src="app/config/site.js"></script>
     <script src="app/common/current-user-service.js"></script>
@@ -46,12 +48,6 @@
 </head>
 
 <body role="document">
-    
-    <nav-bar></nav-bar>
-
-    <div class="container" role="main">
-        <div ng-view class='main-pane'></div>
-    </div>
-
+    <div ui-view="app-content"></div>
 </body>
 </html>
