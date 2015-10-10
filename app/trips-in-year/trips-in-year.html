@@ -1,28 +1,15 @@
-<!DOCTYPE html>
+﻿<h2>Trip Reports for {{year}}</h2>
 
-<html>
-    <head>
-        <title>Trip Report List</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
-        <h2>Trip Reports for {{year}}</h2>
-                </ul>
-        <p><a href='#/tripreports'><span class="li_link">Back to list of years</span></a></p>
-        
-        <button ng-show="loading" class="btn btn-success">Loading...
-            <i class="fa fa-spinner fa-spin"></i>
-        </button>
-        
-        <ul class='list-unstyled'>
-            <ul>
-                <li ng-repeat="trip in triplist" class="li_link">
-                    <a href="#show/{{trip.id}}" >{{trip.date_display}}: {{trip.title}}</a>
-                </li>
-            </ul>
-        </ul>
+<p><a ui-sref='tripreports.years'><span class="li_link">Back to list of years</span></a></p>
 
-        <p><a href='#/tripreports'><span class="li_link">Back to list of years</span></a></p>
-    </body>
-</html>
+<loading></loading>
+
+<ul class='list-unstyled'>
+    <ul>
+        <li ng-repeat="trip in triplist" class="li_link">
+            <a ui-sref="tripreports.show({tripId: trip.id})">{{trip.date_display}}: {{trip.title}}</a>
+        </li>
+    </ul>
+</ul>
+
+<p><a ui-sref='tripreports.years'><span class="li_link">Back to list of years</span></a></p>

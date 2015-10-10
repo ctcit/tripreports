@@ -29,6 +29,13 @@ describe('TripYearsController: ', function () {
 
     beforeEach(function () {
         $httpBackend
+            .whenGET(/app\/.*\.html/).respond(200, ''); // workaround for unexpected requests of views
+
+        $httpBackend
+            .when('GET', site.URL + '/db/index.php/rest/user')
+            .respond({ "id": 0 });
+
+        $httpBackend
             .when('GET', site.URL + '/db/index.php/rest/tripreportyears')
             .respond(years);
 

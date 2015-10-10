@@ -3,27 +3,31 @@
 (function () {
     'use strict';
     angular.module('tripReportApp').controller('TripEditController',
-        ['$scope', '$routeParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
-        function ($scope, $params, $location, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
+        ['$scope', '$state', '$stateParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
+        function ($scope, $state, $stateParams, $location, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
 
             var MAX_UPLOAD_IMAGE_DIMENSION = 1000; // Max width or height in pixels
             var UPLOAD_IMAGE_QUALITY = 0.6;
 
             var currentTripReport = currentTripReportService.get();
-            var id = ($params.tripId != undefined) ? $params.tripId : (currentTripReport) ? currentTripReport.id : 0;
+            var id = ($stateParams.tripId != undefined) ? $stateParams.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
             $scope.deletedImages = [];
             $scope.deletedGpxs = [];
             $scope.submissionErrors = false;
          
-            tripReportService.get({ 'tripId': id }, function (tripReport) {
-                currentTripReportService.set(tripReport);
-                $scope.tripReport = tripReport;
-                // Set resource types in here so template processes resources now
-                $scope.resourceTypes = ['image', 'gpx', 'map'];  
-            }, function(response) {
-                alert("Couldn't fetch trip report (" + response.status + "). A network problem?");
-            });
+            $scope.loading = true;
+            tripReportService.get({ 'tripId': id },
+                function (tripReport) {
+                    currentTripReportService.set(tripReport);
+                    $scope.tripReport = tripReport;
+                    // Set resource types in here so template processes resources now
+                    $scope.resourceTypes = ['image', 'gpx', 'map'];  
+                }, function(response) {
+                    alert("Couldn't fetch trip report (" + response.status + "). A network problem?");
+                }).$promise.finally(function() {
+                    $scope.loading = true;
+                });
             
         
             $scope.imageUrl = function(resourceType, imageNum, thumbReqd) {

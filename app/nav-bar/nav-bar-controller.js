@@ -15,7 +15,7 @@
 
 
     angular.module('tripReportApp').controller('NavBarController',
-        ['$rootScope', '$location', 'currentUser', 'currentTripReportService',
+        ['$rootScope', '$location', 'currentUserService', 'currentTripReportService',
         function ($rootScope, $location, currentUserService, currentTripReportService) {
 
             $rootScope.currentTripReport = currentTripReportService.get();

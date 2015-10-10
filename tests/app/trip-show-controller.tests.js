@@ -16,7 +16,7 @@ describe('TripShowController: ', function () {
         $scope = $rootScope.$new();
 
         createController = function (tripId) {
-            return $controller('TripShowController', { $scope: $scope, $routeParams: { tripId: tripId } });
+            return $controller('TripShowController', { $scope: $scope, $stateParams: { tripId: tripId } });
         };
 
         $httpBackend = _$httpBackend_;
@@ -62,13 +62,16 @@ describe('TripShowController: ', function () {
 
     beforeEach(function () {
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails.id)
-            .respond(tripDetails);
+            .whenGET(/app\/.*\.html/).respond(200, ''); // workaround for unexpected requests of views
 
         $httpBackend
             .when('GET', site.URL + '/db/index.php/rest/user')
             .respond({ "id": 0 });
-        
+
+        $httpBackend
+            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails.id)
+            .respond(tripDetails);
+
         controller = createController(tripDetails.id);
         $httpBackend.flush();
     });

@@ -4,15 +4,16 @@
     'use strict';
 
     angular.module('tripReportApp').controller('TripShowController',
-        ['$scope', '$routeParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService',
-        function ($scope, $params, $location, $q, currentTripReportService, site, tripReportService) {
+        ['$scope', '$state', '$stateParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService',
+        function ($scope, $state, $stateParams, $location, $q, currentTripReportService, site, tripReportService) {
 
             $scope.siteURL = site.URL;
 
             var currentTripReport = currentTripReportService.get();
-            var id = ($params.tripId != undefined) ? $params.tripId : (currentTripReport) ? currentTripReport.id : 0;
+            var id = ($stateParams.tripId != undefined) ? $stateParams.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
-            tripReportService.get({ 'tripId': $params.tripId },
+            $scope.loading = true;
+            tripReportService.get({ 'tripId': id },
                 function (tripReport) {
                     currentTripReportService.set(tripReport);
                     $scope.tripReport = tripReport;
@@ -25,8 +26,9 @@
                 function (fail) {
                     currentTripReportService.clear();
                     alert("Couldn't fetch trip report (" + fail.status + "). A network problem?");
-                }
-            );
+                }).$promise.finally(function() {
+                    $scope.loading = false;
+                });
             
             // Caption for a GPX or Map. Use caption attribute if given
             // else use name.

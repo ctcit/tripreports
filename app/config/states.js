@@ -44,28 +44,28 @@
                 }
             }).
             state('tripreports.show', {
-                url: 'tripreports/:tripId',
+                url: '/tripreports/:tripId',
                 views: {
                     'main-content': {
-                        templateUrl: 'apps/trip-show/trip-show.html',
+                        templateUrl: 'app/trip-show/trip-show.html',
                         controller: 'TripShowController'
                     }
                 }
             }).
             state('tripreports.create', {
-                url: 'tripreports/create',
+                url: '/tripreports/create',
                 views: {
                     'main-content': {
-                        templateUrl: 'apps/trip-edit/trip-edit.html',
+                        templateUrl: 'app/trip-edit/trip-edit.html',
                         controller: 'TripEditController'
                     }
                 }
             }).
             state('tripreports.edit', {
-                url: 'tripreports/edit/:tripId',
+                url: '/tripreports/edit/:tripId',
                 views: {
                     'main-content': {
-                        templateUrl: 'apps/trip-edit/trip-edit.html',
+                        templateUrl: 'app/trip-edit/trip-edit.html',
                         controller: 'TripEditController'
                     }
                 }

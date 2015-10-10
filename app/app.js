@@ -55,5 +55,8 @@
        });
     });
     
-    
+    tripReportApp.run(function ($state) {
+        $state.go('tripreports.years');
+    });
+
 }());

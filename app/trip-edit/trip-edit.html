@@ -1,236 +1,229 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>{{tripReport.title}}</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-    </head>
-    <body>
-       <h2 class="tripReportFormHdr">Trip Report Form</h2>
-        <form class="css-form" novalidate>
-        <p>Welcome to the new trip report system.
+﻿
+<h2 class="tripReportFormHdr">Trip Report Form</h2>
+
+<loading></loading>
+
+<form class="css-form" novalidate>
+    <p>
+        Welcome to the new trip report system.
         Please <a href="mailto:richard.lobb@canterbury.ac.nz">email me</a>
-        if you have any problems.</p>
-        <p>Please fill in the title, trip start date and duration fields below
+        if you have any problems.
+    </p>
+    <p>
+        Please fill in the title, trip start date and duration fields below
         then enter your trip report
         into the box labelled "Body of trip report". Add any photos, maps and GPX files
         (all optional) and finish by clicking the "Submit trip report" button at the
-        very bottom of the page.</p>
-        <p>Entering your trip report directly into the box isn't a good
+        very bottom of the page.
+    </p>
+    <p>
+        Entering your trip report directly into the box isn't a good
         idea, because if something goes wrong you might lose the lot.
         A much safer approach is first prepare your
         report on your own computer in your favourite editor, then copy and
-        paste it into the panel below and then reformat as required. 
-        [If you use Microsoft Word to edit the original, 
+        paste it into the panel below and then reformat as required.
+        [If you use Microsoft Word to edit the original,
         you should use the icon at the top left of the edit panel - the
         one like a clipboard with a small 'W' in it - to paste your report.]
-                </p>
-        
-        <!-- ============================================================= -->
-        <h3>Title, date, etc</h3>
-        <table class="table table-nonfluid">
-            <tr>
-                <td>Title (excluding date):</td>
-                <td><input name="title" type="text" size="50" ng-model="tripReport.title" ngRequired
-                           class="{{titleClass()}}"/>
-                    <br />e.g., "The Ascent of Rumdoodle"</td>
-            </tr>
-            
-            <tr>
-                <td>Trip type:</td>
-                <td>
-                    <select ng-model="tripReport.trip_type">
-                        <option value="club">club</option>
-                        <option value="private">private</option>
-                    </select>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>Trip start date:</td>
-                <td>
-                    Day: <select class="selectday"
+    </p>
+
+    <!-- ============================================================= -->
+    <h3>Title, date, etc</h3>
+    <table class="table table-nonfluid">
+        <tr>
+            <td>Title (excluding date):</td>
+            <td>
+                <input name="title" type="text" size="50" ng-model="tripReport.title" ngRequired
+                       class="{{titleClass()}}" />
+                <br />e.g., "The Ascent of Rumdoodle"
+            </td>
+        </tr>
+
+        <tr>
+            <td>Trip type:</td>
+            <td>
+                <select ng-model="tripReport.trip_type">
+                    <option value="club">club</option>
+                    <option value="private">private</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Trip start date:</td>
+            <td>
+                Day: <select class="selectday"
                              ng-options="day for day in range(1, 32) track by day.toString()"
                              ng-model="tripReport.day">
-                        <option value="">-- Select day --</option>
-                        </select>&nbsp;&nbsp;&nbsp;
-                    Month: <select class="selectmonth"
-                             ng-options="month for month in range(1, 13) track by month.toString()"
-                             ng-model="tripReport.month">
-                            <option value="">-- Select month --</option>
-                            </select>&nbsp;&nbsp;
-                    Year: <input type="text" size="4" ng-model="tripReport.year" required />
-                </td>
-            </tr>
-        
-            <tr>
-                <td>Trip Length (days):</td>
-                <td>
-                    <select ng-options="duration for duration in range(1, 30) track by duration.toString()"
-                            ng-model="tripReport.duration" required>
-                        <option value="">-- Select duration --</option>
-                    </select>&nbsp;&nbsp;
-                    1 for day trip, 2 for overnight, etc.
-                </td>
-            </tr>
-            
-            <tr  ng-show="badSubmittedDate()" class="error">
-                <td></td>
-                <td>Please select start date and duration</td>
-            </tr>
-               
-            <tr>
-                <td title="Click the checkbox to set an explicit date rather than autogenerate it from the above info">
-                    Explicit date:</td>
-                <td>
-                    <input type="checkbox"
-                           ng-model="tripReport.user_set_date_display"
-                           ng-change='updateDateDisplay()'/>
-                    <input ng-if="tripReport.user_set_date_display == 1"
-                           size="30"
-                           type="text" name="date_display"
-                           ng-model="tripReport.date_display" />
-                </td>
-            </tr>
-        </table>
-        <!-- ============================================================= -->
-        <h3>Body of trip report</h3>
+                    <option value="">-- Select day --</option>
+                </select>&nbsp;&nbsp;&nbsp;
+                Month: <select class="selectmonth"
+                               ng-options="month for month in range(1, 13) track by month.toString()"
+                               ng-model="tripReport.month">
+                    <option value="">-- Select month --</option>
+                </select>&nbsp;&nbsp;
+                Year: <input type="text" size="4" ng-model="tripReport.year" required />
+            </td>
+        </tr>
 
-        <textarea ng-model="tripReport.body" ck-editor></textarea>
-        <p ng-show="emptyBody()" class="error">Empty trip report!</p>
+        <tr>
+            <td>Trip Length (days):</td>
+            <td>
+                <select ng-options="duration for duration in range(1, 30) track by duration.toString()"
+                        ng-model="tripReport.duration" required>
+                    <option value="">-- Select duration --</option>
+                </select>&nbsp;&nbsp;
+                1 for day trip, 2 for overnight, etc.
+            </td>
+        </tr>
 
-        <!-- ============================================================= -->
+        <tr ng-show="badSubmittedDate()" class="error">
+            <td></td>
+            <td>Please select start date and duration</td>
+        </tr>
 
-        <div ng-repeat="resourceType in resourceTypes"
-             ng-init="resources = tripReport[resourceType + 's'];">
-            
-            <div ng-if="resourceType == 'image'">
-                <h3 class="resource-h3">Photos (optional)</h3>
-                <p>Please add at least a few photos if you have any; they
-                    give the report a big lift. Photos are laid out in rows of three,
-                    so it helps if you upload a multiple of 3 photos.
-                </p>
-                <p>In this new Trip Report system you don't need to down-size
-                    images before attaching them; that will be done for you
-                    in the web browser. There may be a small delay after
-                    selecting each image while it is down-sized.
-                </p>
-            </div>
-            
-            <div ng-if="resourceType == 'map'">
-                <h3 class="resource-h3">Route maps (optional)</h3>
-                <p>
+        <tr>
+            <td title="Click the checkbox to set an explicit date rather than autogenerate it from the above info">
+                Explicit date:
+            </td>
+            <td>
+                <input type="checkbox"
+                       ng-model="tripReport.user_set_date_display"
+                       ng-change='updateDateDisplay()' />
+                <input ng-if="tripReport.user_set_date_display == 1"
+                       size="30"
+                       type="text" name="date_display"
+                       ng-model="tripReport.date_display" />
+            </td>
+        </tr>
+    </table>
+    <!-- ============================================================= -->
+    <h3>Body of trip report</h3>
+
+    <textarea ng-model="tripReport.body" ck-editor></textarea>
+    <p ng-show="emptyBody()" class="error">Empty trip report!</p>
+
+    <!-- ============================================================= -->
+
+    <div ng-repeat="resourceType in resourceTypes"
+         ng-init="resources = tripReport[resourceType + 's'];">
+
+        <div ng-if="resourceType == 'image'">
+            <h3 class="resource-h3">Photos (optional)</h3>
+            <p>
+                Please add at least a few photos if you have any; they
+                give the report a big lift. Photos are laid out in rows of three,
+                so it helps if you upload a multiple of 3 photos.
+            </p>
+            <p>
+                In this new Trip Report system you don't need to down-size
+                images before attaching them; that will be done for you
+                in the web browser. There may be a small delay after
+                selecting each image while it is down-sized.
+            </p>
+        </div>
+
+        <div ng-if="resourceType == 'map'">
+            <h3 class="resource-h3">Route maps (optional)</h3>
+            <p>
                 Route maps are jpeg images showing the route you took,
                 plotted on a map generated by a program
                 like <i>Freshmap</i> or <i>Topomap</i>.
-                </p>
+            </p>
 
-                <p ng-if="resources.length > 0">
+            <p ng-if="resources.length > 0">
                 Copyright notice (amend as appropriate):
                 <input type="text" size="60" ng-model="tripReport.map_copyright" />
-                </p>
-            </div>
-            
-            <div ng-if="resourceType == 'gpx'">
-                <h3 class="resource-h3">GPX files (optional)</h3>
-                GPX files are route files downloaded from a GPS.
-            </div>
+            </p>
+        </div>
 
-            <div class="tripReportFiles"
-                 id="{{resourceType}}resources" >
-                <table id="{{resourceType}}-table"
-                       ng-if="resources.length > 0"
-                       class="{{resourceType}}-table  resourcetable">
-                    <tr>
-                        <th>{{capitalise(resourceType)}}</th>
-                        <th></h>
-                        <th>Caption</th>
-                    </tr>
-                    <tr ng-repeat="resource in resources">
-                        <td>
-                            <div style='display:inline-block'>
-                                <button ng-if="!$first && resource.name !== ''"
-                                        type="button"
-                                        title='Move up'
-                                        ng-click="moveUp(resourceType, $index)">
+        <div ng-if="resourceType == 'gpx'">
+            <h3 class="resource-h3">GPX files (optional)</h3>
+            GPX files are route files downloaded from a GPS.
+        </div>
+
+        <div class="tripReportFiles"
+             id="{{resourceType}}resources">
+            <table id="{{resourceType}}-table"
+                   ng-if="resources.length > 0"
+                   class="{{resourceType}}-table  resourcetable">
+                <tr>
+                    <th>{{capitalise(resourceType)}}</th>
+                    <th></h>
+                    <th>Caption</th>
+                </tr>
+                <tr ng-repeat="resource in resources">
+                    <td>
+                        <div style='display:inline-block'>
+                            <button ng-if="!$first && resource.name !== ''"
+                                    type="button"
+                                    title='Move up'
+                                    ng-click="moveUp(resourceType, $index)">
                                 <span class="glyphicon glyphicon-arrow-up"
-                                      aria-hidden="true" ></span>
-                                </button>
-                                <br>
-                                <button ng-if="!$last"
-                                        type="button"
-                                        title='Move down'ng-click="moveDown(resourceType, $index)">
+                                      aria-hidden="true"></span>
+                            </button>
+                            <br>
+                            <button ng-if="!$last"
+                                    type="button"
+                                    title='Move down' ng-click="moveDown(resourceType, $index)">
                                 <span class="glyphicon glyphicon-arrow-down"
                                       aria-hidden="true"></span>
-                            </div>
-                            <div style='display:inline-block' ng-model="tripReport[resource + 's'][$index]">
-                                <a ng-if="resourceType != 'gpx' && (resource.id !== 0 || resource.loaded)" 
-                                   href='{{imageUrl(resourceType, $index, false)}}'
-                                   target='_blank' >
-                                    <img 
-                                         class='img-thumbnail'
-                                         ng-src='{{imageUrl(resourceType, $index, true)}}'
-                                         width="150"
-                                         alt='{{resource.name}}'
-                                         title='{{resource.name}}'
-                                    />
-                                </a>
-                                <span ng-if="resource.id == 0 && !resource.loaded">
-                                    Loading ...
-                                </span>
-                                <span ng-if="resourceType == 'gpx'">
-                                    {{resource.name}}
-                                </span>
-                                  
-                            </div>
-                        </td>
-                        </td>
+                        </div>
+                        <div style='display:inline-block' ng-model="tripReport[resource + 's'][$index]">
+                            <a ng-if="resourceType != 'gpx' && (resource.id !== 0 || resource.loaded)"
+                               href='{{imageUrl(resourceType, $index, false)}}'
+                               target='_blank'>
+                                <img class='img-thumbnail'
+                                     ng-src='{{imageUrl(resourceType, $index, true)}}'
+                                     width="150"
+                                     alt='{{resource.name}}'
+                                     title='{{resource.name}}' />
+                            </a>
+                            <span ng-if="resource.id == 0 && !resource.loaded">
+                                Loading ...
+                            </span>
+                            <span ng-if="resourceType == 'gpx'">
+                                {{resource.name}}
+                            </span>
 
-                        <td>
-                            <button
-                                class="resource-delete-button"
+                        </div>
+                    </td>
+                    </td>
+
+                    <td>
+                        <button class="resource-delete-button"
                                 type="button"
                                 title="Delete {{resource.name}} ({{trusted(resource.caption)}})"
                                 ng-click="delete(resourceType, $index)">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </button>
-                        </td>
+                        </button>
+                    </td>
 
-                        <td>
-                            <input class="caption-input" type="text"
-                                   placeholder="Enter a caption"
-                                   ng-model="resource.caption" />
-                        </td>
-                    </tr>
-                </table>
-                Add {{resourceType}}:&nbsp;&nbsp;<input
-                            style="display:inline"
-                            type='file'
-                            id="add-{{resourceType}}"
-                            file-change="fileSelected($event, files, resourceType)"
-                            ng-model="tripReport[resourceType + 's']" />
+                    <td>
+                        <input class="caption-input" type="text"
+                               placeholder="Enter a caption"
+                               ng-model="resource.caption" />
+                    </td>
+                </tr>
+            </table>
+            Add {{resourceType}}:&nbsp;&nbsp;<input style="display:inline"
+                                                    type='file'
+                                                    id="add-{{resourceType}}"
+                                                    file-change="fileSelected($event, files, resourceType)"
+                                                    ng-model="tripReport[resourceType + 's']" />
 
-            </div>
         </div>
-      
-        <hr />
-        <p>
+    </div>
+
+    <hr />
+    <p>
 
         <input class="submit" name="submit" type="button"
                value="{{submitOrSave()}}"
-               ng-click="submit()"
-        />
+               ng-click="submit()" />
 
         <input class="cancel" name="cancel" type="button"
                value="Cancel"
-               ng-click="cancel()"
-        />
-        </p>
-    </form>
-    </body>
-</html>
+               ng-click="cancel()" />
+    </p>
+</form>
