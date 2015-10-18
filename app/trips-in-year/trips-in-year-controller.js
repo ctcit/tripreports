@@ -8,7 +8,7 @@
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
             var url = site.URL + '/db/index.php/rest/yearstripreports/' + $stateParams.year;
                  
-            currentTripReportService.clear();
+            currentTripReportService.currentTripReport = null;
             $scope.year = $stateParams.year;
             $scope.loading = true;
             $http.get(url).then(function (response) {

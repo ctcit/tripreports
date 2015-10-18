@@ -9,13 +9,13 @@
 
             $scope.siteURL = site.URL;
 
-            var currentTripReport = currentTripReportService.get();
+            var currentTripReport = currentTripReportService.currentTripReport;
             var id = ($stateParams.tripId != undefined) ? $stateParams.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
             $scope.loading = true;
             tripReportService.get({ 'tripId': id },
                 function (tripReport) {
-                    currentTripReportService.set(tripReport);
+                    currentTripReportService.currentTripReport = tripReport;
                     $scope.tripReport = tripReport;
 
                     $scope.numImageRows = Math.ceil(tripReport.images.length / 3);
@@ -24,7 +24,7 @@
                     $scope.numGpxs = tripReport.gpxs.length;
                 }, 
                 function (fail) {
-                    currentTripReportService.clear();
+                    currentTripReportService.currentTripReport = null;
                     alert("Couldn't fetch trip report (" + fail.status + "). A network problem?");
                 }).$promise.finally(function() {
                     $scope.loading = false;
@@ -55,7 +55,7 @@
                 if (phpDate) { // If defined
                     datePart = phpDate.split(' ')[0];
                     bits = datePart.split('-');
-                    date = new Date(bits[0], bits[1], bits[2]);
+                    date = new Date(bits[0], bits[1] - 1 /* js month is 0-indexed */ , bits[2]);
                     return date.toDateString();
                 } else {
                     return '';

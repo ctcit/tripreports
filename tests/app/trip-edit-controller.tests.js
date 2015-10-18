@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-describe('TripShowController: ', function () {
+describe('TripEditController: ', function () {
     var $scope;
     var createController;
     var $httpBackend;
@@ -16,7 +16,7 @@ describe('TripShowController: ', function () {
         $scope = $rootScope.$new();
 
         createController = function (tripId) {
-            return $controller('TripShowController', { $scope: $scope, $stateParams: { tripId: tripId } });
+            return $controller('TripEditController', { $scope: $scope, $stateParams: { tripId: tripId } });
         };
 
         $httpBackend = _$httpBackend_;
@@ -87,9 +87,30 @@ describe('TripShowController: ', function () {
         expect(currentTripReportService.currentTripReport.id).toEqual(tripDetails.id);
     });
 
-    it('should convert and format the upload date correctly', function () {
-        expect(currentTripReportService.currentTripReport.upload_date).toEqual('1995-07-10 00:00:00');
-        expect($scope.uploadDate()).toEqual('Mon Jul 10 1995');
+    it('should format the single day trip date range correctly', function () {
+        //"year": "1995",
+        //"month": "6",
+        //"day": "10",
+        //"duration": "1",
+        //"date_display": "10 June 1995",
+        expect($scope.getDateDisplay()).toEqual('10-10 June 1995');
     });
 
+    it('should format the multi-day trip date range correctly (within month)', function () {
+        currentTripReportService.currentTripReport.duration = 5;
+        expect($scope.getDateDisplay()).toEqual('10-14 June 1995');
+    });
+
+    it('should format the multi-day trip date range correctly (across months)', function () {
+        currentTripReportService.currentTripReport.duration = 5;
+        currentTripReportService.currentTripReport.day = 29;
+        expect($scope.getDateDisplay()).toEqual('29 June - 3 July 1995');
+    });
+
+    it('should format the multi-day trip date range correctly (across years)', function () {
+        currentTripReportService.currentTripReport.duration = 5;
+        currentTripReportService.currentTripReport.day = 29;
+        currentTripReportService.currentTripReport.month = 12;
+        expect($scope.getDateDisplay()).toEqual('29 December 1995 - 2 January 1996');
+    });
 });

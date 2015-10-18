@@ -9,7 +9,7 @@
             var MAX_UPLOAD_IMAGE_DIMENSION = 1000; // Max width or height in pixels
             var UPLOAD_IMAGE_QUALITY = 0.6;
 
-            var currentTripReport = currentTripReportService.get();
+            var currentTripReport = currentTripReportService.currentTripReport;
             var id = ($stateParams.tripId != undefined) ? $stateParams.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
             $scope.deletedImages = [];
@@ -19,7 +19,7 @@
             $scope.loading = true;
             tripReportService.get({ 'tripId': id },
                 function (tripReport) {
-                    currentTripReportService.set(tripReport);
+                    currentTripReportService.currentTripReport = tripReport;
                     $scope.tripReport = tripReport;
                     // Set resource types in here so template processes resources now
                     $scope.resourceTypes = ['image', 'gpx', 'map'];  
@@ -234,7 +234,7 @@
                                 ' ' + yearEnd);
                 } else { // Trip crosses new-year boundary
                     result = (dayStart + ' ' + months[monthStart] + ' ' +
-                                yearStart + ' - ' + dayEnd + ' ' + monthEnd + ' ' +
+                                yearStart + ' - ' + dayEnd + ' ' + months[monthEnd] + ' ' +
                                 yearEnd);
                 }
                 return result;

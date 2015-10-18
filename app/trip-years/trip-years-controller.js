@@ -7,7 +7,7 @@
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
             var url = site.URL + '/db/index.php/rest/tripreportyears',
                 NUM_RECENT = 10;  // The number of years to show by default
-            currentTripReportService.clear();
+            currentTripReportService.currentTripReport = null;
             $scope.numYears = 0;
 
             $scope.loading = true;
