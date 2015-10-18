@@ -73,7 +73,7 @@
                 var resources = $scope.tripReport[resourceType + 's'],
                     id = 0,
                     resource = resources[index];
-                if (confirm('Delete ' + resourceType + resource.name + ' (' + resource.caption + ')')) {
+                if ($scope.confirm('Delete ' + resourceType + resource.name + ' (' + resource.caption + ')')) {
                     id = $scope.tripReport[resourceType + 's'][index].id;
                     if (id != 0) {  // If it's a server resource, mark it for deletion
                         if (resourceType === 'gpx') {
@@ -335,10 +335,15 @@
             
             $scope.cancel = function() {
                 // Handle a click on the cancel button
-                if (confirm('Discard all your changes and go back to browsing trip reports. Are you QUITE SURE?!')) {
+                if ($scope.confirm('Discard all your changes and go back to browsing trip reports. Are you QUITE SURE?!')) {
                     $location.path('#');
                 }
             };
+
+            $scope.confirm = function (message) {
+                // Wrap so it can be easily mocked
+                return confirm(message);
+            }
             
         }]);
 }());
