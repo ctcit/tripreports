@@ -6,8 +6,7 @@
     var tripReportApp = angular.module('tripReportApp', [
       'ngRoute',
       'ngResource',
-      'ui.router',
-      'tripReportControllers'
+      'ui.router'
     ]);
     
     tripReportApp.config( [
@@ -47,6 +46,10 @@
         };
     });
     
+    tripReportApp.filter('unsafe', function ($sce) {
+        return $sce.trustAsHtml;
+    });
+
     // This is meant to prevent caching of old view code, but doesn't
     // always work.
     tripReportApp.run(function($rootScope, $templateCache) {
