@@ -77,7 +77,7 @@
             $rootScope.editReport = function () {
                 // Switch to the edit page if user is authenticated and authorised.
                 var currentTripReport = currentTripReportService.currentTripReport;
-                if (!currentTripReport) {
+                if (currentTripReport) {
                     if (!currentUserService.isLoggedIn() || (!currentUserService.hasRoles() && currentUserService.currentUser.id != currentTripReport.uploader_id)) {
                         alert("Sorry, but you must be logged into the main website as a club officer or the " +
                                 "trip report author to edit this report");
@@ -92,7 +92,7 @@
                 // club officer or the author, and provided they confirm it's
                 // ok to delete it.
                 var currentTripReport = currentTripReportService.currentTripReport;
-                if (!currentTripReport) {
+                if (currentTripReport) {
                     if (!currentUserService.isLoggedIn() || (!currentUserService.hasRoles() && currentUserService.currentUser.id != currentTripReport.uploader_id)) {
                         alert("Sorry, but you must be logged into the main website as a club officer or the " +
                             "trip report author to delete a report");
