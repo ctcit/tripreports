@@ -1,4 +1,4 @@
-﻿// The top level controller used for navigation and to provide global functions
+// The top level controller used for navigation and to provide global functions
 
 (function () {
     'use strict';

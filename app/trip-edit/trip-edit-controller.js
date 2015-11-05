@@ -197,7 +197,9 @@
             
             $scope.submitOrSave = function() {
                 // Return a value for use in the submit/save button
-                return $scope.tripReport.id == 0 ? 'Submit' : 'Save changes';
+                // Deal with race problem (tripReport undefined) by checking
+                // both if the tripReport is defined then if it has a non-zero id.
+                return $scope.tripReport && $scope.tripReport.id ? 'Save changes' : 'Submit';
             };
             
             $scope.getDateDisplay = function() {
