@@ -60,6 +60,23 @@
             function isState(state) { 
                 return $state.$current.name == state;
             };
+            
+            function authorised (editOrDelete, tripReport) {
+                // Given a string 'edit' or 'delete', confirm that the
+                // current user has the appropriate rights on the given
+                // tripReport. Return true if so, issue an alert and return
+                // false if not.
+                if (currentUserService && currentUserService.isLoggedIn() &&
+                      (currentUserService.hasRoles() || currentUserService.currentUser().id == tripReport.uploader_id)) {
+                    return true;
+                } else {
+                    alert("Sorry, but you must be logged into the main website as a club officer " +
+                        "or the trip report author to " + editOrDelete + " this report");
+                    return false;
+                }   
+            };
+            
+            $rootScope.authorised = authorised;  // Hack/hook for testing
 
             $rootScope.isBrowseActive = function () {
                 return isState('tripreports.years') || isState('tripreports.foryear');
@@ -73,17 +90,12 @@
             $rootScope.isCreateActive = function () {
                 return isState('tripreports.create');
             }
-
+            
             $rootScope.editReport = function () {
                 // Switch to the edit page if user is authenticated and authorised.
                 var currentTripReport = currentTripReportService.currentTripReport;
-                if (currentTripReport) {
-                    if (!currentUserService.isLoggedIn() || (!currentUserService.hasRoles() && currentUserService.currentUser.id != currentTripReport.uploader_id)) {
-                        alert("Sorry, but you must be logged into the main website as a club officer or the " +
-                                "trip report author to edit this report");
-                    } else {
-                        $state.go('tripreports.edit', { tripId: currentTripReport.id });
-                    }
+                if (currentTripReport && authorised('edit', currentTripReport)) {
+                    $state.go('tripreports.edit', { tripId: currentTripReport.id });
                 }
             };
 
@@ -92,21 +104,15 @@
                 // club officer or the author, and provided they confirm it's
                 // ok to delete it.
                 var currentTripReport = currentTripReportService.currentTripReport;
-                if (currentTripReport) {
-                    if (!currentUserService.isLoggedIn() || (!currentUserService.hasRoles() && currentUserService.currentUser.id != currentTripReport.uploader_id)) {
-                        alert("Sorry, but you must be logged into the main website as a club officer or the " +
-                            "trip report author to delete a report");
-                    } else if (confirm('Completely delete trip report "' + currentTripReport.title +
+                if (currentTripReport &&  authorised('edit', currentTripReport) &&
+                        confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
-                        tripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
-                            //alert("Report has been deleted");
-                            $state.go('tripreports.years');
-                        })
-                    }
-                }
+                    currentTripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
+                        //alert("Report has been deleted");
+                        $state.go('tripreports.years');
+                    });
+                };
             };
-
-
         }
     ]);
 

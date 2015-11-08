@@ -1,4 +1,5 @@
-// The top level controller used for navigation and to provide global functions
+// Directive and its controller for a 'Loading' icon that displays a spinner
+// while loading data from the site.
 
 (function () {
     'use strict';

@@ -27,8 +27,24 @@ describe('NavBarController: ', function () {
         currentTripReportService = _currentTripReportService_;
     }));
 
-    var tripDetails = {
-        "id": "3"
+    var tripDetails1 = {
+        "id": "3",
+        "uploader_id": "17"
+    };
+    
+    var tripDetails2 = {
+        "id": "4",
+        "uploader_id": "18"
+    };
+    
+    var userDetails1 = {
+        "id": "17",
+        "roles": []
+    };
+    
+    var userDetails2 = {
+        "id": "200",
+        "roles": ['webmaster']
     };
 
     beforeEach(function () {
@@ -36,12 +52,16 @@ describe('NavBarController: ', function () {
             .whenGET(/app\/.*\.html/).respond(200, ''); // workaround for unexpected requests of views
 
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/user')
-            .respond({ "id": 0 });
-
+            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails1.id)
+            .respond(tripDetails1);
+    
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails.id)
-            .respond(tripDetails);
+            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails2.id)
+            .respond(tripDetails2);
+    
+        $httpBackend
+            .when('GET', site.URL + '/db/index.php/rest/user')
+            .respond(userDetails1);
 
         $httpBackend.flush();
 
@@ -77,9 +97,9 @@ describe('NavBarController: ', function () {
     });
 
     it('should have only Browse, Edit, and Delete buttons visible when showing a specific trip', function () {
-        $state.go('tripreports.show', { tripId: tripDetails.id }); // Hmmm... not running controller
+        $state.go('tripreports.show', { tripId: tripDetails1.id }); // Hmmm... not running controller
         $httpBackend.flush();
-        currentTripReportService.currentTripReport = tripDetails; // workaround
+        currentTripReportService.currentTripReport = tripDetails1; // workaround
         $rootScope.$digest();
 
         expect(element[0].innerText).toContain("Browse");
@@ -87,6 +107,31 @@ describe('NavBarController: ', function () {
         expect(element[0].innerText).toContain("Delete");
 
         expect(element[0].innerText).not.toContain("Create");
+    });
+    
+    it('should allow the author of a report to edit and delete it', function() {
+        $state.go('tripreports.show', { tripId: tripDetails1.id });
+        $httpBackend.flush();
+        $rootScope.$digest();
+        expect($rootScope.authorised('edit', tripDetails1)).toBe(true);
+        expect($rootScope.authorised('delete', tripDetails1)).toBe(true);
+    });
+    
+    
+    it('should allow a user with roles to edit and delete any trip report', function() {
+        $state.go('tripreports.show', { tripId: tripDetails1.id });
+        $httpBackend.flush();
+        $rootScope.$digest();
+        expect($rootScope.authorised('edit', tripDetails1)).toBe(true);
+        expect($rootScope.authorised('delete', tripDetails1)).toBe(true);
+    });
+    
+    it('should not allow a non-author of a report to edit and delete it', function() {
+        $state.go('tripreports.show', { tripId: tripDetails2.id });
+        $httpBackend.flush();
+        $rootScope.$digest();
+        expect($rootScope.authorised('edit', tripDetails2)).toBe(false);
+        expect($rootScope.authorised('delete', tripDetails2)).toBe(false);
     });
 
 });
