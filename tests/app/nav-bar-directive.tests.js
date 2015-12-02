@@ -108,7 +108,7 @@ describe('NavBarController: ', function () {
 
         expect(element[0].innerText).not.toContain("Create");
     });
-    
+
     it('should allow the author of a report to edit and delete it', function() {
         $state.go('tripreports.show', { tripId: tripDetails1.id });
         $httpBackend.flush();

@@ -4,8 +4,8 @@
     'use strict';
 
     angular.module('tripReportApp').controller('TripShowController',
-        ['$scope', '$state', '$stateParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService',
-        function ($scope, $state, $stateParams, $location, $q, currentTripReportService, site, tripReportService) {
+        ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService', 'site', 'tripReportService',
+        function ($scope, $state, $stateParams, $q, currentTripReportService, site, tripReportService) {
 
             $scope.siteURL = site.URL;
 

@@ -3,8 +3,8 @@
 (function () {
     'use strict';
     angular.module('tripReportApp').controller('TripEditController',
-        ['$scope', '$state', '$stateParams', '$location', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
-        function ($scope, $state, $stateParams, $location, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
+        ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
+        function ($scope, $state, $stateParams, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
 
             var MAX_UPLOAD_IMAGE_DIMENSION = 1000; // Max width or height in pixels
             var UPLOAD_IMAGE_QUALITY = 0.6;
@@ -26,7 +26,7 @@
                 }, function(response) {
                     alert("Couldn't fetch trip report (" + response.status + "). A network problem?");
                 }).$promise.finally(function() {
-                    $scope.loading = true;
+                    $scope.loading = false;
                 });
             
         
@@ -315,7 +315,7 @@
                         $scope.saveOrUpdate().then(
                                 function(result) { // Success
                                     //alert("Upload successful");
-                                    $location.url('/show/' + id);
+                                    $state.go('tripreports.show', { tripId: id });
                                 },
                                 function(response) { // Fail
                                     alert("Trip report upload failed with error " + response.status + ' ' + response.data);
@@ -338,7 +338,7 @@
             $scope.cancel = function() {
                 // Handle a click on the cancel button
                 if ($scope.confirm('Discard all your changes and go back to browsing trip reports. Are you QUITE SURE?!')) {
-                    $location.path('#');
+                    $state.go('tripreports.years', {});
                 }
             };
 

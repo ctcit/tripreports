@@ -82,10 +82,10 @@
                 return isState('tripreports.years') || isState('tripreports.foryear');
             }
             $rootScope.isEditActive = function () {
-                return isState('tripreports.foryear');
+                return isState('tripreports.edit');
             }
             $rootScope.isDeleteActive = function () {
-                return isState('tripreports.edit');
+                return false;  // No such state, currently
             }
             $rootScope.isCreateActive = function () {
                 return isState('tripreports.create');
@@ -104,7 +104,8 @@
                 // club officer or the author, and provided they confirm it's
                 // ok to delete it.
                 var currentTripReport = currentTripReportService.currentTripReport;
-                if (currentTripReport &&  authorised('edit', currentTripReport) &&
+                if (currentTripReport && 
+                        authorised('edit', currentTripReport) &&
                         confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
                     currentTripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
