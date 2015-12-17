@@ -9,9 +9,22 @@
       'ui.router'
     ]);
     
+    // Set global constant site.URL from window.location
+    var full_url = window.location.href,
+        pathMatcher = new RegExp('(.*)/tripreports.*'),
+        bits = pathMatcher.exec(full_url),
+        site_url = 'invalidurl';
+    if (bits != null) {
+        site_url = bits[1];
+    } else {
+        console.log("TripReport module fetched from an unexpected address");
+    }
+    tripReportApp.constant('site', {'URL': site_url});
+    
+    
     tripReportApp.config( [
         '$compileProvider',
-        function($compileProvider) {   
+        function($compileProvider) {
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):|data:image\//);
         }
     ]);
