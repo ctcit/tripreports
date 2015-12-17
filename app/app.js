@@ -11,7 +11,7 @@
     
     // Set global constant site.URL from window.location
     var full_url = window.location.href,
-        pathMatcher = new RegExp('(.*)/tripreports.*'),
+        pathMatcher = new RegExp('(.*?)/tripreports.*'),
         bits = pathMatcher.exec(full_url),
         site_url = 'invalidurl';
     if (bits != null) {
@@ -19,6 +19,7 @@
     } else {
         console.log("TripReport module fetched from an unexpected address");
     }
+    console.log("Setting site url to " + site_url);
     tripReportApp.constant('site', {'URL': site_url});
     
     
