@@ -11,6 +11,10 @@ body {
     padding-right: 20px;
 }
 
+div.iframe-buttons {
+    float: right;
+}
+
 .error {
    background-color: #FA787E;
 }
@@ -20,7 +24,7 @@ body {
 }
 
 .navbar-brand {
-    font-size: 36px;
+    // font-size: 36px;
     color: white !important; 
 }
 .row-no-padding {
@@ -33,7 +37,7 @@ div.tripimage {
 }
 
 .li_link {
-    font-size: larger;
+    // font-size: larger;
     padding-bottom: 8px;
 }
 
