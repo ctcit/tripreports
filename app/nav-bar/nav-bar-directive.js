@@ -3,7 +3,8 @@
 (function () {
     'use strict';
 
-    // Directive for the navigation bar
+    // Directive for the navigation bar, which is shown only if we're the
+    // top level window.
     angular.module('tripReportApp').directive('navBar', [function () {
 
         return {
@@ -11,7 +12,10 @@
             replace: true,
             //templateUrl: 'app/nav-bar/nav-bar.html', // difficult to test when view is in separate file
             template: 
-                '<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavBarController">\
+                '<nav class="navbar navbar-inverse navbar-fixed-top"\n\
+                      role="navigation"\n\
+                      ng-controller="NavBarController"\n\
+                      ng-hide="isInFrame()">\
                     <div class="container">\
                         <div class="navbar-header">\
                             <button type="button" class="navbar-toggle"\
@@ -46,11 +50,49 @@
         };
     }]);
 
+    // Add an event listener for changes in the state (i.e. route). Attempt
+    // to update the main site URL in the top window if we're running in an
+    // embedded iframe. 
+    // *** THIS DOESN"T WORK *** Get rid of it (probably) and use specially
+    // customised URLs instead (when we're in an iframe).
+    angular.module('tripReportApp').run(
+        ['$rootScope', '$location', 'site',
+         function ($rootScope, $location, site) {
+            var goto, newLocation;
+            $rootScope.$on('$stateChangeSuccess', function () {
+                if ($rootScope.isInFrame && $rootScope.isInFrame()) {
+                    goto = $location.url().replace('/', '%2F');
+                    newLocation = site.URL + '/index.php/trip-reports?goto=' + goto;
+                    console.log('Setting top to ' + newLocation)
+                    // window.top.location = newLocation;
+                }
+                console.log('State changed. New hash: ' + $location.url());
+            })
+         }]
+    );
+
+
 
     angular.module('tripReportApp').controller('NavBarController',
         ['$rootScope', '$state', 'currentUserService', 'currentTripReportService',
         function ($rootScope, $state, currentUserService, currentTripReportService) {
-
+            
+            $rootScope.bodyStyle = function () {
+                if ($rootScope.isInFrame()) {
+                    return {"padding-top": "0px"};
+                } else {
+                    return {};
+                }
+            }
+                
+            $rootScope.isInFrame = function () {  // True if we're in an iframe
+                try {
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
+            }
+            
             $rootScope.currentTripReport = function () {
                 return currentTripReportService.currentTripReport;
             }
@@ -75,6 +117,16 @@
                     return false;
                 }   
             };
+            
+            $rootScope.canEdit = function () {
+                var tripReport = $rootScope.currentTripReport();
+                if (!tripReport) {
+                    return false;
+                } else {
+                    return currentUserService && currentUserService.isLoggedIn() && 
+                      (currentUserService.hasRoles() || currentUserService.currentUser().id == tripReport.uploader_id);
+                }
+            }
             
             $rootScope.authorised = authorised;  // Hack/hook for testing
 
