@@ -33,7 +33,7 @@
     <script src="app/trip-show/trip-show-controller.js"></script>
     
     <!-- Iframe resizer -->
-    <script src="../db/scripts/iframeResizer/js/iframeResizer.contentWindow.js"></script>
+    <script src="../db/scripts/iframeResizer/js/iframeResizer.contentWindow.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
@@ -47,7 +47,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 
-<body role="document">
+<body role="document" ng-style="bodyStyle()">
     <div ui-view="app-content"></div>
 </body>
 </html>
