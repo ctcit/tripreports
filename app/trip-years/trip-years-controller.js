@@ -5,7 +5,7 @@
     angular.module('tripReportApp').controller('TripYearsController',
         ['$scope', '$state', '$stateParams', '$http', 'currentTripReportService', 'site',
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
-            var url = site.URL + '/db/index.php/rest/tripreportyears',
+            var url = site.resturl + '/tripreportyears',
                 NUM_RECENT = 10;  // The number of years to show by default
             currentTripReportService.currentTripReport = null;
             $scope.numYears = 0;

@@ -7,12 +7,13 @@
         ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService', 'site', 'tripReportService',
         function ($scope, $state, $stateParams, $q, currentTripReportService, site, tripReportService) {
 
-            $scope.siteURL = site.URL;
+            $scope.siteURL = site.url;
 
             var currentTripReport = currentTripReportService.currentTripReport;
             var id = ($stateParams.tripId != undefined) ? $stateParams.tripId : (currentTripReport) ? currentTripReport.id : 0;
 
             $scope.loading = true;
+            $scope.site = site; // Make global site config available to view
             tripReportService.get({ 'tripId': id },
                 function (tripReport) {
                     currentTripReportService.currentTripReport = tripReport;
@@ -45,7 +46,7 @@
             // website, given the gpx id.
              $scope.topomapLink = function(gpxid) {
                 return "http://www.topomap.co.nz/NZTopoMap?v=2&gpx=http%3A%2F%2Fwww.topomap.co.nz%2Fproxy.ashx%3F" + 
-                        encodeURIComponent(site.URL + '/dbgpx.php?id=' + gpxid);
+                        encodeURIComponent(site.url + '/dbgpx.php?id=' + gpxid);
             };
             
             // Return the trip report's upload_date in the form Tue 4 January 2014

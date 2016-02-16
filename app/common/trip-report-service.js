@@ -5,7 +5,7 @@
     angular.module('tripReportApp').factory('tripReportService', ['$resource', 'site',
         function ($resource, site) {
             return $resource(
-                site.URL + '/db/index.php/rest/tripreports/:tripId',
+                site.url + '/db/index.php/rest/tripreports/:tripId',
                 { tripId: '@id' },
                 {
                     save: { 'method': 'POST', 'withCredentials': true },

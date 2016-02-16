@@ -9,7 +9,7 @@
       'ui.router'
     ]);
     
-    // Set global constant site.URL from window.location
+    // Set global constant site.url from window.location
     var full_url = window.location.href,
         pathMatcher = new RegExp('(.*?)/tripreports.*'),
         bits = pathMatcher.exec(full_url),
@@ -20,7 +20,14 @@
         console.log("TripReport module fetched from an unexpected address");
     }
     console.log("Setting site url to " + site_url);
-    tripReportApp.constant('site', {'URL': site_url});
+    // tripReportApp.constant('site', {'url': site_url});
+    
+    // TODO find a better solution to having to reconfigure the following links manually
+    tripReportApp.constant('site',
+        {'url': 'http://localhost/joomla',
+         'tripreportbaseurl': 'http://localhost/joomla/index.php/trip-reports',
+         'resturl': 'http://localhost/ctc/db/index.php/rest',
+         'imageurl': 'http://localhost/ctc'});
     
     
     tripReportApp.config( [

@@ -16,10 +16,10 @@
         <div ng-repeat='i in range(numImageRows)' class="row">
             <div ng-repeat='col in range(3)'>
                 <div ng-if='3 * i + col < numImages' class="col-xs-4 tripimage">
-                    <a href='{{siteURL}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
+                    <a href='{{site.imageurl}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
                        target='_blank'>
                         <img class='img-thumbnail'
-                             ng-src="{{siteURL}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}" />
+                             ng-src="{{site.imageurl}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}" />
                     </a>
                     <p><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
                 </div>

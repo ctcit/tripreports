@@ -5,7 +5,7 @@
     angular.module('tripReportApp').factory('gpxService', ['$resource', 'site',
         function ($resource, site) {
             return $resource(
-                site.URL + '/db/index.php/rest/gpxs/:gpxId',
+                site.resturl + '/gpxs/:gpxId',
                 { gpxId: '@id' },
                 {
                     save: { 'method': 'POST', 'withCredentials': true },

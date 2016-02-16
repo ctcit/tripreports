@@ -16,7 +16,7 @@
                 hasRoles: function() { return currentUser && currentUser.roles && currentUser.roles.length > 0; },
 
                 load: function () {
-                    return $http.get(site.URL + '/db/index.php/rest/user')
+                    return $http.get(site.url + '/db/index.php/rest/user')
                         .success(function (user) {
                             currentUser = user;
                             return currentUser;

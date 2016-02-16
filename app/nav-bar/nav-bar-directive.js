@@ -50,28 +50,6 @@
         };
     }]);
 
-    // Add an event listener for changes in the state (i.e. route). Attempt
-    // to update the main site URL in the top window if we're running in an
-    // embedded iframe. 
-    // *** THIS DOESN"T WORK *** Get rid of it (probably) and use specially
-    // customised URLs instead (when we're in an iframe).
-    angular.module('tripReportApp').run(
-        ['$rootScope', '$location', 'site',
-         function ($rootScope, $location, site) {
-            var goto, newLocation;
-            $rootScope.$on('$stateChangeSuccess', function () {
-                if ($rootScope.isInFrame && $rootScope.isInFrame()) {
-                    goto = $location.url().replace('/', '%2F');
-                    newLocation = site.URL + '/index.php/trip-reports?goto=' + goto;
-                    console.log('Setting top to ' + newLocation)
-                    // window.top.location = newLocation;
-                }
-                console.log('State changed. New hash: ' + $location.url());
-            })
-         }]
-    );
-
-
 
     angular.module('tripReportApp').controller('NavBarController',
         ['$rootScope', '$state', 'currentUserService', 'currentTripReportService',
@@ -84,8 +62,10 @@
                     return {};
                 }
             }
+          
                 
-            $rootScope.isInFrame = function () {  // True if we're in an iframe
+            // Function to check if we're in an iframe. true if we are.
+            $rootScope.isInFrame = function () { 
                 try {
                     return window.self !== window.top;
                 } catch (e) {
@@ -168,5 +148,27 @@
             };
         }
     ]);
+    
+    // Add an event listener for changes in the state (i.e. route). Attempt
+    // to update the main site URL in the top window if we're running in an
+    // embedded iframe. 
+    angular.module('tripReportApp').run(
+        ['$rootScope', '$location', 'site',
+         function ($rootScope, $location, site) {
+            var goto, newLocation;
+            $rootScope.$on('$stateChangeSuccess', function () {
+                if ($rootScope.isInFrame && $rootScope.isInFrame()) {
+                    goto = $location.url();
+                    if (goto[0] === '/') {
+                        goto = goto.substring(1);
+                    }
+                    goto = goto.replace('/', '%2F');
+                    newLocation = site.tripreportbaseurl + '?goto=' + goto;
+                    window.top.history.pushState('string', '', newLocation);
+                    console.log('New parent url: ' + newLocation);
+                }
+            })
+         }]
+    );
 
 }());

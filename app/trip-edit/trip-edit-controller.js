@@ -39,10 +39,10 @@
                     if (image.id == 0) {  // Local?
                         return image.dataUrl ? image.dataUrl : '';
                     } else if (thumbReqd) {
-                        return site.URL + '/dbthumb.php?id=' + image.id;
+                        return site.imageurl + '/dbthumb.php?id=' + image.id;
                     } else {
-                        return site.URL + '/dbcaptionedimage.php?id=' + image.id;
-                    }
+                        return site.imageurl + '/dbcaptionedimage.php?id=' + image.id;
+                    }dbthumb
                 }
             } 
 
