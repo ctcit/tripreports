@@ -163,7 +163,8 @@
                         goto = goto.substring(1);
                     }
                     goto = goto.replace('/', '%2F');
-                    newLocation = site.tripreportbaseurl + '?goto=' + goto;
+                    //newLocation = site.tripreportbaseurl + '?goto=' + goto;
+                    newLocation = './index.php?goto=' + goto;
                     window.top.history.pushState('string', '', newLocation);
                     console.log('New parent url: ' + newLocation);
                 }

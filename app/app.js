@@ -24,10 +24,10 @@
     
     // TODO find a better solution to having to reconfigure the following links manually
     tripReportApp.constant('site',
-        {'url': 'http://localhost/joomla',
-         'tripreportbaseurl': 'http://localhost/joomla/index.php/trip-reports',
-         'resturl': 'http://localhost/ctc/db/index.php/rest',
-         'imageurl': 'http://localhost/ctc'});
+        {'url': 'http://localhost/ctc34',
+         'tripreportbaseurl': 'http://localhost/ctc34/index.php/trip-reports',
+         'resturl': 'http://localhost/ctc34/db/index.php/rest',
+         'imageurl': 'http://localhost/ctc34'});
     
     
     tripReportApp.config( [

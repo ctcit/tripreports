@@ -1,0 +1,12 @@
+﻿<h2>Recent trip reports</h2>
+
+<loading></loading>
+
+<ul class='list-unstyled'>
+    <ul>
+        <li ng-repeat="trip in triplist" class="li_link">
+            <a ui-sref="tripreports.show({tripId: trip.id})">{{trip.date_display}}: {{trip.title}}</a>
+        </li>
+    </ul>
+</ul>
+<p><li> </li></p>

@@ -43,6 +43,15 @@
                     }
                 }
             }).
+            state('tripreports.recent', {
+                url: '/recenttripreports/:maxrecent/:maxdays',
+                views: {
+                    'main-content': {
+                        templateUrl: 'app/recent-trips/recent-trips.html',
+                        controller: 'RecentTripsController'
+                    }
+                }
+            }).
             state('tripreports.show', {
                 url: '/tripreports/:tripId',
                 views: {

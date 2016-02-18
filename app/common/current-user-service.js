@@ -9,7 +9,6 @@
             // the one on which this code is running).
 
             var currentUser = null;
-
             return {
                 currentUser: function () { return currentUser; },
                 isLoggedIn: function () { return currentUser != null; },
@@ -24,6 +23,7 @@
                        .error(function (fail) {
                            currentUser = null;
                            alert("Couldn't fetch user info (" + fail.status + "). A network problem?");
+                           console.trace();
                            return currentUser;
                        })
                 }
