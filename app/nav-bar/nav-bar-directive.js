@@ -11,11 +11,11 @@
             restrict: 'E',
             replace: true,
             //templateUrl: 'app/nav-bar/nav-bar.html', // difficult to test when view is in separate file
-            template: 
+            template:
                 '<nav class="navbar navbar-inverse navbar-fixed-top"\n\
                       role="navigation"\n\
                       ng-controller="NavBarController"\n\
-                      ng-hide="isInFrame()">\
+                      ng-if="!isInFrame()">\
                     <div class="container">\
                         <div class="navbar-header">\
                             <button type="button" class="navbar-toggle"\
@@ -57,9 +57,9 @@
             
             $rootScope.bodyStyle = function () {
                 if ($rootScope.isInFrame()) {
-                    return {"padding-top": "0px"};
+                    return {};//{"padding-top": "0px"};
                 } else {
-                    return {};
+                    return {"padding-top": "50px"};
                 }
             }
           
@@ -67,6 +67,7 @@
             // Function to check if we're in an iframe. true if we are.
             $rootScope.isInFrame = function () { 
                 try {
+                    //return false;//Testing
                     return window.self !== window.top;
                 } catch (e) {
                     return true;
@@ -164,9 +165,9 @@
                     }
                     goto = goto.replace('/', '%2F');
                     //newLocation = site.tripreportbaseurl + '?goto=' + goto;
-                    newLocation = './index.php?goto=' + goto;
-                    window.top.history.pushState('string', '', newLocation);
-                    console.log('New parent url: ' + newLocation);
+                    newLocation = './index.php/trip-reports?goto=' + goto;
+                    //window.top.history.pushState('string', '', newLocation);
+                    //console.log('New parent url: ' + newLocation);
                 }
             })
          }]
