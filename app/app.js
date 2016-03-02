@@ -64,21 +64,6 @@
         $rootScope.trusted = function(s) {
             return $sce.trustAsHtml(s);
         };
-        $rootScope.navigateToTripReport = function (event, tripid, urlGoto) {
-            // This is the key -> preventing default navigation
-            event.preventDefault();
-            var url = '../tripreports/index.html#/tripreports/'+ tripid;
-            urlGoto = urlGoto + "goto=tripreports%2F" + tripid;
-            window.location = url;
-            /*
-            if ($rootScope.isInFrame && $rootScope.isInFrame()) {
-                window.top.history.pushState('string', '', urlGoto);
-                window.top.history.replaceState('string', '', urlGoto);
-            }
-            */
-
-        };
-        
     });
     
     tripReportApp.filter('unsafe', function ($sce) {

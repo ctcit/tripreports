@@ -5,7 +5,7 @@
 <ul class='list-unstyled'>
     <ul>
         <li ng-repeat="trip in triplist" class="li_link">
-            <a ng-href="../index.php/trip-reports?goto=tripreports%2F{{trip.id}}" ng-click="navigateToTripReport($event, trip.id, './index.php/trip-reports?')">{{trip.date_display}}: {{trip.title}}</a>
+            <a ng-href="../index.php/trip-reports?goto=tripreports%2F{{trip.id}}" ng-click="navigateToTripReport($event, trip.id)">{{trip.date_display}}: {{trip.title}}</a>
         </li>
    </ul>
 </ul>
