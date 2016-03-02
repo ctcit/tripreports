@@ -70,9 +70,12 @@
             var url = '../tripreports/index.html#/tripreports/'+ tripid;
             urlGoto = urlGoto + "goto=tripreports%2F" + tripid;
             window.location = url;
+            /*
             if ($rootScope.isInFrame && $rootScope.isInFrame()) {
                 window.top.history.pushState('string', '', urlGoto);
+                window.top.history.replaceState('string', '', urlGoto);
             }
+            */
 
         };
         
