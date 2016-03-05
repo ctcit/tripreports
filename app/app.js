@@ -9,27 +9,6 @@
       'ui.router'
     ]);
     
-    // Set global constant site.url from window.location
-    var full_url = window.location.href,
-        pathMatcher = new RegExp('(.*?)/tripreports.*'),
-        bits = pathMatcher.exec(full_url),
-        site_url = 'invalidurl';
-    if (bits != null) {
-        site_url = bits[1];
-    } else {
-        console.log("TripReport module fetched from an unexpected address");
-    }
-    console.log("Setting site url to " + site_url);
-    // tripReportApp.constant('site', {'url': site_url});
-    
-    // TODO find a better solution to having to reconfigure the following links manually
-    tripReportApp.constant('site',
-        {'url': 'http://localhost/ctc34',
-         'tripreportbaseurl': 'http://localhost/ctc34/index.php/trip-reports',
-         'resturl': 'http://localhost/ctc34/db/index.php/rest',
-         'imageurl': 'http://localhost/ctc34'});
-    
-    
     tripReportApp.config( [
         '$compileProvider',
         function($compileProvider) {

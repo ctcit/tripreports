@@ -52,15 +52,15 @@ describe('NavBarController: ', function () {
             .whenGET(/app\/.*\.html/).respond(200, ''); // workaround for unexpected requests of views
 
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails1.id)
+            .when('GET', site.url + '/db/index.php/rest/tripreports/' + tripDetails1.id)
             .respond(tripDetails1);
     
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/tripreports/' + tripDetails2.id)
+            .when('GET', site.url + '/db/index.php/rest/tripreports/' + tripDetails2.id)
             .respond(tripDetails2);
     
         $httpBackend
-            .when('GET', site.URL + '/db/index.php/rest/user')
+            .when('GET', site.url + '/db/index.php/rest/user')
             .respond(userDetails1);
 
         $httpBackend.flush();
