@@ -6,6 +6,7 @@ describe('NavBarController: ', function () {
     var createController;
     var $state;
     var $httpBackend;
+    var $window;
     var site;
     var currentUserService;
     var currentTripReportService;
@@ -16,11 +17,13 @@ describe('NavBarController: ', function () {
     beforeEach(angular.mock.module('tripReportApp'));
 
     //mock the controller for the same reason and include $rootScope and $controller
-    beforeEach(angular.mock.inject(function (_$compile_, _$rootScope_, $controller, _$httpBackend_, _site_, _$state_, _currentUserService_, _currentTripReportService_) {
+    beforeEach(angular.mock.inject(function (_$compile_, _$rootScope_, $controller, _$httpBackend_, _$window_, _site_, _$state_, _currentUserService_, _currentTripReportService_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
 
         $httpBackend = _$httpBackend_;
+        $window = _$window_;
+
         site = _site_;
         $state = _$state_;
         currentUserService = _currentUserService_;
@@ -63,6 +66,8 @@ describe('NavBarController: ', function () {
             .when('GET', site.url + '/db/index.php/rest/user')
             .respond(userDetails1);
 
+        spyOn($window, "alert").and.returnValue();
+
         $httpBackend.flush();
 
         element = $compile("<nav-bar></nav-bar>")($rootScope);
@@ -78,22 +83,22 @@ describe('NavBarController: ', function () {
     // tests start here
     it('should have only Browse and Create buttons visible when showing trip years', function () {
 
-        expect(element[0].innerText).toContain("Browse");
-        expect(element[0].innerText).toContain("Create");
+        expect(element[0].nextSibling.innerText).toContain("Browse");
+        expect(element[0].nextSibling.innerText).toContain("Create");
 
-        expect(element[0].innerText).not.toContain("Edit");
-        expect(element[0].innerText).not.toContain("Delete");
+        expect(element[0].nextSibling.innerText).not.toContain("Edit");
+        expect(element[0].nextSibling.innerText).not.toContain("Delete");
     });
 
     it('should have only Browse and Create buttons visible when showing trips in year', function () {
         $state.go('tripreports.foryear', { year: 2000 }); // Hmmm... not running controller
         $httpBackend.flush();
 
-        expect(element[0].innerText).toContain("Browse");
-        expect(element[0].innerText).toContain("Create");
+        expect(element[0].nextSibling.innerText).toContain("Browse");
+        expect(element[0].nextSibling.innerText).toContain("Create");
 
-        expect(element[0].innerText).not.toContain("Edit");
-        expect(element[0].innerText).not.toContain("Delete");
+        expect(element[0].nextSibling.innerText).not.toContain("Edit");
+        expect(element[0].nextSibling.innerText).not.toContain("Delete");
     });
 
     it('should have only Browse, Edit, and Delete buttons visible when showing a specific trip', function () {
@@ -102,11 +107,11 @@ describe('NavBarController: ', function () {
         currentTripReportService.currentTripReport = tripDetails1; // workaround
         $rootScope.$digest();
 
-        expect(element[0].innerText).toContain("Browse");
-        expect(element[0].innerText).toContain("Edit");
-        expect(element[0].innerText).toContain("Delete");
+        expect(element[0].nextSibling.innerText).toContain("Browse");
+        expect(element[0].nextSibling.innerText).toContain("Edit");
+        expect(element[0].nextSibling.innerText).toContain("Delete");
 
-        expect(element[0].innerText).not.toContain("Create");
+        expect(element[0].nextSibling.innerText).not.toContain("Create");
     });
 
     it('should allow the author of a report to edit and delete it', function() {

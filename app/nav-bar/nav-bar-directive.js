@@ -46,7 +46,7 @@
                         </div>\
                     </div>\
                 </nav>',
-            controllerAs: 'NavBarController'
+            controllerAs: 'navBarController'
         };
     }]);
 
