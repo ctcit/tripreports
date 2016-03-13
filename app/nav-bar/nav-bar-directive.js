@@ -147,11 +147,11 @@
                     });
                 };
             };
-            $rootScope.navigateToTripReport = function (event, tripid) {
-                // This is the key -> preventing default navigation
-                event.preventDefault();
-                $state.go('tripreports.show', { tripId: tripid});
-            };
+            //$rootScope.navigateToTripReport = function (event, tripid) {
+            //    // This is the key -> preventing default navigation
+            //    event.preventDefault();
+            //    $state.go('tripreports.show', { tripId: tripid});
+            //};
         
         }
     ]);
