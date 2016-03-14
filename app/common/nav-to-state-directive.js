@@ -4,19 +4,21 @@
     // Directive to navigate to new state 
     angular.module('tripReportApp').directive('navToState', [function () {
 
-        var controller = ['$state',
-        function ($state) {
+        var controller = ['$scope', '$state',
+            function ($scope, $state) {
+                // get the url for the specified state via the $state service
+                var paramsObj = $scope.$eval(this.params); // convert string to object
+                var url = $state.href(this.name, paramsObj);
+                url = url.replace('#/', ''); // trim leading part of url (I guess this is added again elsewhere?)
+                this.url = encodeURIComponent(url);
 
-            this.url = "";
+                this.navigateToState = function (event) {
+                    // This is the key -> preventing default navigation
+                    event.preventDefault();
 
-            this.navigateToState = function (event, name, params) {
-                // This is the key -> preventing default navigation
-                event.preventDefault();
-
-                var paramsObj = JSON.parse(params);
-                $state.go(name, paramsObj);
-            };
-        }];
+                    $state.go(this.name, paramsObj);
+                };
+            }];
 
         return {
             restrict: 'E',
@@ -30,13 +32,11 @@
             controller: controller,
             controllerAs: 'navToStateController',
             template:
-                '<div>' +
-                    '<a ' +
-                        'ng-href="../index.php/trip-reports?goto={{navToStateController.url}}" ' +
-                        'ng-click="navToStateController.navigateToState($event, \'{{navToStateController.name}}\', \'{{navToStateController.params}}\')" ' +
-                        'ng-transclude>' +
-                    '</a>' +
-                '</div>'
+                '<a ' +
+                    'ng-href="../index.php/trip-reports?goto={{navToStateController.url}}" ' +
+                    'ng-click="navToStateController.navigateToState($event)" ' +
+                    'ng-transclude>' +
+                '</a>'
         };
     }]);
 
