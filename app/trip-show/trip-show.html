@@ -7,7 +7,7 @@
         <button ng-click="editReport()">Edit</button>
         <button ng-click="deleteReport()">Delete</button>
     </div>
-    <p><a ui-sref="tripreports.foryear({year: tripReport.year})">Back to trips for {{tripReport.year}}</a></p>
+    <p><a href="" ng-click=navigateBack() >Back</a></p>
 
     <loading></loading>
 
@@ -71,6 +71,6 @@
     </div>
     <p>--Uploaded by: {{tripReport.uploader_name}} on {{uploadDate()}}</p>
 
-    <p><a ui-sref="tripreports.foryear({year: tripReport.year})">Back to trips for {{tripReport.year}}</a></p>
+    <p><a href="" ng-click=navigateBack() >Back</a></p>
 </div>
 

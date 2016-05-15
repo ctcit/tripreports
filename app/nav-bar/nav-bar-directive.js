@@ -152,7 +152,12 @@
                 event.preventDefault();
                 $state.go('tripreports.show', { tripId: tripid});
             };
-        
+            
+            $rootScope.navigateBack = function(){
+                if ($rootScope.isInFrame){
+                    window.history.back();
+                }
+            };
         }
     ]);
     

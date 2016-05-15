@@ -2,7 +2,7 @@
      'use strict';
  
     // change as appropriate; comment out to set it from window.location
-     var site_url = 'http://www.ctc.org.nz';
+     var site_url = 'http://192.168.2.8/ctc34';
 
      if (!site_url) {
          // Set global constant site.url from window.location
