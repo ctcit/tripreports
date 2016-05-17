@@ -141,10 +141,10 @@
                         authorised('edit', currentTripReport) &&
                         confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
-                    if (currentTripReport.$remove()){
-                        //alert("Report has been deleted");
-                        $state.go('tripreports.years');
-                    }
+                    currentTripReport.$remove(function(){
+                        $rootScope.navigateBack();
+                        //$state.go('tripreports.years');
+                    });
                 };
             };
             $rootScope.navigateToTripReport = function (event, tripid) {
