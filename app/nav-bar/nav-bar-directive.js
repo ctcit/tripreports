@@ -100,7 +100,7 @@
             };
             
             $rootScope.canEdit = function () {
-                var tripReport = $rootScope.currentTripReport();
+               var tripReport = $rootScope.currentTripReport();
                 if (!tripReport) {
                     return false;
                 } else {
@@ -141,10 +141,10 @@
                         authorised('edit', currentTripReport) &&
                         confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
-                    currentTripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
+                    if (currentTripReport.$remove()){
                         //alert("Report has been deleted");
                         $state.go('tripreports.years');
-                    });
+                    }
                 };
             };
             $rootScope.navigateToTripReport = function (event, tripid) {
