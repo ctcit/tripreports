@@ -9,7 +9,7 @@
         <li ng-repeat="trip in triplist" class="li_link">
             <a ng-href="../index.php/trip-reports?goto=tripreports%2F{{trip.id}}"
                ng-click="navigateToTripReport($event, trip.id)">{{trip.date_display}}: 
-                <span class='reporttitle' ng-bind-html='trip.title'></span></a>
+                <span class='reporttitle' ng-bind-html='trip.title | unsafe'></span></a>
         </li>
     </ul>
 </ul>
