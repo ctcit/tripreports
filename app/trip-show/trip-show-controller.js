@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    angular.module('tripReportApp').controller('TripShowController',
+    angular.module('tripReportApp', ['ngSanitize']).controller('TripShowController',
         ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService', 'site', 'tripReportService',
         function ($scope, $state, $stateParams, $q, currentTripReportService, site, tripReportService) {
 

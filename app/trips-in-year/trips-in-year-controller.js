@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    angular.module('tripReportApp').controller('TripsInYearController',
+    angular.module('tripReportApp', ['ngSanitize']).controller('TripsInYearController',
         ['$scope', '$state', '$stateParams', '$http', 'currentTripReportService', 'site',
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
             var url = site.url + '/db/index.php/rest/yearstripreports/' + $stateParams.year;

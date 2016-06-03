@@ -1,7 +1,7 @@
 ﻿<div class="tripReport">
     <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
 
-    <h2>{{tripReport.date_display}}: {{tripReport.title}}
+    <h2>{{tripReport.date_display}}: <span class='reporttitle' ng-bind-html='tripReport.title'></span>
     </h2>
     <div class="iframe-buttons" ng-if="isInFrame() && canEdit()">
         <button ng-click="editReport()">Edit</button>
