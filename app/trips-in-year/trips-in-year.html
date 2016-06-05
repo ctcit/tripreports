@@ -7,9 +7,8 @@
 <ul class='list-unstyled'>
     <ul>
         <li ng-repeat="trip in triplist" class="li_link">
-            <a ng-href="../index.php/trip-reports?goto=tripreports%2F{{trip.id}}"
-               ng-click="navigateToTripReport($event, trip.id)">{{trip.date_display}}: 
-                <span class='reporttitle' ng-bind-html='trip.title | unsafe'></span></a>
+            <!--<a ng-href="../index.php/trip-reports?goto=tripreports%2F{{trip.id}}" ng-click="navigateToTripReport($event, trip.id)">{{trip.date_display}}: {{trip.title}}</a>-->
+            <nav-to-state name="tripreports.show" params="{ tripId: {{trip.id}} }">{{trip.date_display}}: <span ng-bind-html='trip.title } insafe'><span></nav-to-state>
         </li>
     </ul>
 </ul>
