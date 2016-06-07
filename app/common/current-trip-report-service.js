@@ -8,8 +8,8 @@
             var currentTripReport = null;
 
             return {
-                currentTripReport: currentTripReport,
-            }
+                currentTripReport: currentTripReport
+            };
         }
     ]);
 
