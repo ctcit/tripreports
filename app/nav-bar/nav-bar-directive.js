@@ -100,7 +100,7 @@
             };
             
             $rootScope.canEdit = function () {
-               var tripReport = $rootScope.currentTripReport();
+                var tripReport = $rootScope.currentTripReport();
                 if (!tripReport) {
                     return false;
                 } else {
@@ -141,23 +141,24 @@
                         authorised('edit', currentTripReport) &&
                         confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
-                    currentTripReport.$remove(function(){
-                        $rootScope.navigateBack();
-                        //$state.go('tripreports.years');
+                    currentTripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
+                        //alert("Report has been deleted");
+                        $state.go('tripreports.years');
                     });
                 };
             };
-            $rootScope.navigateToTripReport = function (event, tripid) {
-                // This is the key -> preventing default navigation
-                event.preventDefault();
-                $state.go('tripreports.show', { tripId: tripid});
-            };
             
             $rootScope.navigateBack = function(){
-                if ($rootScope.isInFrame){
+                if ($rootScope.isInFrame()){
                     window.history.back();
                 }
             };
+            //$rootScope.navigateToTripReport = function (event, tripid) {
+            //    // This is the key -> preventing default navigation
+            //    event.preventDefault();
+            //    $state.go('tripreports.show', { tripId: tripid});
+            //};
+        
         }
     ]);
     
