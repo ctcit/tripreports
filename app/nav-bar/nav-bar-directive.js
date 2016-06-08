@@ -147,6 +147,12 @@
                     });
                 };
             };
+            
+            $rootScope.navigateBack = function(){
+                if ($rootScope.isInFrame()){
+                    window.history.back();
+                }
+            };
             //$rootScope.navigateToTripReport = function (event, tripid) {
             //    // This is the key -> preventing default navigation
             //    event.preventDefault();
