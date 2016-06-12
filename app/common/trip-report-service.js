@@ -8,7 +8,7 @@
                 site.url + '/db/index.php/rest/tripreports/:tripId',
                 { tripId: '@id' },
                 {
-                    save: { 'method': 'POST', 'withCredentials': true },
+                    save:   { 'method': 'POST', 'withCredentials': true },
                     update: { 'method': 'PUT', 'withCredentials': true },
                     remove: { 'method': 'DELETE', 'withCredentials': true }
                 }

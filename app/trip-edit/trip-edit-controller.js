@@ -3,8 +3,10 @@
 (function () {
     'use strict';
     angular.module('tripReportApp').controller('TripEditController',
-        ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService', 'site', 'tripReportService', 'imageService', 'gpxService',
-        function ($scope, $state, $stateParams, $q, currentTripReportService, site, tripReportService, imageService, gpxService) {
+        ['$scope', '$state', '$stateParams', '$q', 'currentTripReportService',
+            'site', 'tripReportService', 'imageService', 'gpxService',
+         function ($scope, $state, $stateParams, $q, currentTripReportService,
+             site, tripReportService, imageService, gpxService) {
 
             var MAX_UPLOAD_IMAGE_DIMENSION = 1000; // Max width or height in pixels
             var UPLOAD_IMAGE_QUALITY = 0.6;
@@ -310,15 +312,17 @@
                     // Now save (if new) or update 
                     // (otherwise) the actual trip report.
                     $q.all(promises).catch(function(response) {
-                        alert("Deletion of an image or gpx failed (" + response.status + "). Check the result carefully");
+                        alert("Deletion of an image or gpx failed (" + 
+                                response.status + "). Check the result carefully");
                     }).finally(function(result) {
                         $scope.saveOrUpdate().then(
                                 function(result) { // Success
                                     //alert("Upload successful");
-                                    $state.go('tripreports.show', { tripId: id });
+                                    $state.go('tripreports.show', { tripId: result.id });
                                 },
                                 function(response) { // Fail
-                                    alert("Trip report upload failed with error " + response.status + ' ' + response.data);
+                                    alert("Trip report upload failed with error " + 
+                                            response.status + ' ' + response.data);
                                 }).finally(function() {
                                     $scope.saving = false;
                                 });
