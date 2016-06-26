@@ -37,6 +37,19 @@ div.tripimage {
     text-align:center;
 }
 
+.captioned-thumbnail {
+    padding: 2px;
+    border: #B0B0B0 solid 1px;
+    display: table;
+}
+
+p.image-caption {
+    text-align: center;
+    font-size: smaller;
+    // background-color: #EAEAEA;
+}
+
+
 .li_link {
     // font-size: larger;
     padding-bottom: 8px;
