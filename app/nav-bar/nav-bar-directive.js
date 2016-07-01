@@ -52,8 +52,8 @@
 
 
     angular.module('tripReportApp').controller('NavBarController',
-        ['$rootScope', '$state', 'currentUserService', 'currentTripReportService',
-        function ($rootScope, $state, currentUserService, currentTripReportService) {
+        ['$rootScope', '$state', 'currentUserService', 'currentTripReportService', 'tripReportService',
+        function ($rootScope, $state, currentUserService, currentTripReportService, tripReportService) {
             
             $rootScope.bodyStyle = function () {
                 if ($rootScope.isInFrame()) {
@@ -141,7 +141,7 @@
                         authorised('edit', currentTripReport) &&
                         confirm('Completely delete trip report "' + currentTripReport.title +
                             '"? This cannot be undone. Are you quite sure?')) {
-                    currentTripReportService.remove({ 'tripId': $params.tripId }, function (tripReport) {
+                    tripReportService.remove({ 'tripId': currentTripReport.id }, function (tripReport) {
                         //alert("Report has been deleted");
                         $state.go('tripreports.years');
                     });
