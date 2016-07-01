@@ -23,6 +23,9 @@
                     $scope.numImages = tripReport.images.length;
                     $scope.numMaps = tripReport.maps.length;
                     $scope.numGpxs = tripReport.gpxs.length;
+                    $scope.numImagesInRow = function (rowNum) {
+                        return Math.min(tripReport.images.length - 3 * rowNum);
+                    };
                 }, 
                 function (fail) {
                     currentTripReportService.currentTripReport = null;
