@@ -12,7 +12,7 @@
     <loading></loading>
 
     <div class='tripimages' ng-if='tripReport.images.length > 0'>
-        <h3>Trip Photos</h3>
+        <h3>Photos</h3>
         <div ng-repeat='i in range(numImageRows)' class="row">
             <div ng-repeat='col in range(3)'>
                 <div ng-if='3 * i + col < numImages' class="col-xs-4 tripimage">
@@ -66,7 +66,7 @@
         may be required.
     </p>
 
-    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Trip Report</h3>
+    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
     <div class='reportbody' ng-bind-html='tripReport.body | unsafe'>
     </div>
     <p>--Uploaded by: {{tripReport.uploader_name}} on {{uploadDate()}}</p>
