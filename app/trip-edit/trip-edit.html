@@ -1,23 +1,25 @@
 ﻿
-<h2 class="tripReportFormHdr">Trip Report Form</h2>
+<h2 class="tripReportFormHdr">Trip Report or News Form</h2>
 
 <loading></loading>
 
 <form class="css-form" novalidate>
     <p>
-        Welcome to the new trip report system.
+        Welcome to the new trip report and news system.
         Please <a href="mailto:richard.lobb@canterbury.ac.nz">email me</a>
         if you have any problems.
     </p>
     <p>
-        Please fill in the title, trip start date and duration fields below
-        then enter your trip report
-        into the box labelled "Body of trip report". Add any photos, maps and GPX files
-        (all optional) and finish by clicking the "Submit trip report" button at the
+        Please fill in the title and select the type of report (club trip,
+        private trip or news). For trip reports, also fill in the trip start date
+        and duration fields.
+    <p> Then enter your trip report or news item
+        into the box labelled "Body of report". Add any photos, maps and GPX files
+        (all optional) and finish by clicking the "Submit" button at the
         very bottom of the page.
     </p>
     <p>
-        Entering your trip report directly into the box isn't a good
+        Entering your report directly into the box isn't a good
         idea, because if something goes wrong you might lose the lot.
         A much safer approach is first prepare your
         report on your own computer in your favourite editor, then copy and
@@ -40,16 +42,17 @@
         </tr>
 
         <tr>
-            <td>Trip type:</td>
+            <td>Report type:</td>
             <td>
                 <select ng-model="tripReport.trip_type">
-                    <option value="club">club</option>
-                    <option value="private">private</option>
+                    <option value="club">club trip</option>
+                    <option value="private">private trip</option>
+                    <option value="news">news</option>
                 </select>
             </td>
         </tr>
 
-        <tr>
+        <tr ng-show="tripReport.trip_type != 'news'">
             <td>Trip start date:</td>
             <td>
                 Day: <select class="selectday"
@@ -66,7 +69,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr ng-show="tripReport.trip_type != 'news'">
             <td>Trip Length (days):</td>
             <td>
                 <select ng-options="duration for duration in range(1, 30) track by duration.toString()"
@@ -82,7 +85,7 @@
             <td>Please select start date and duration</td>
         </tr>
 
-        <tr>
+        <tr ng-show="tripReport.trip_type != 'news'">
             <td title="Click the checkbox to set an explicit date rather than autogenerate it from the above info">
                 Explicit date:
             </td>
@@ -98,7 +101,7 @@
         </tr>
     </table>
     <!-- ============================================================= -->
-    <h3>Body of trip report</h3>
+    <h3>Body of report</h3>
 
     <textarea ng-model="tripReport.body" ckeditor></textarea>
     <p ng-show="emptyBody()" class="error">Empty trip report!</p>
@@ -116,7 +119,7 @@
                 so it helps if you upload a multiple of 3 photos.
             </p>
             <p>
-                In this new Trip Report system you don't need to down-size
+                In this new report system you don't need to down-size
                 images before attaching them; that will be done for you
                 in the web browser. There may be a small delay after
                 selecting each image while it is down-sized.

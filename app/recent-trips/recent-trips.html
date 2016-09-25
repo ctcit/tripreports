@@ -1,11 +1,11 @@
-﻿<h2>Recent trip reports</h2>
+﻿<h2>Recent news and trip reports</h2>
 
 <loading></loading>
 
 <ul class='list-unstyled'>
     <ul>
         <li ng-repeat="trip in triplist" class="li_link">
-            <nav-to-state name="tripreports.show" params="{ tripId: {{trip.id}} }">{{trip.date_display}}: <span ng-bind-html='trip.title | unsafe'><span></nav-to-state>
+        <nav-to-state name="tripreports.show" params="{ tripId: {{trip.id}} }"><span ng-show="trip.trip_type!='news'">{{trip.date_display}}: </span><span ng-bind-html='trip.title | unsafe'><span></nav-to-state>
         </li>
    </ul>
 </ul>

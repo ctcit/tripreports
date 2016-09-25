@@ -174,7 +174,9 @@
             
             $scope.badDate = function() {
                 // Return true if a submitted form has an invalid date or duration
-                return  ($scope.tripReport.day      == 0 ||
+                // Applicable only for trip reports, not news reports.
+                return  $scope.tripReport.trip_type != 'news' &&
+                        ($scope.tripReport.day      == 0 ||
                          $scope.tripReport.month    == 0 ||
                          $scope.tripReport.duration == 0
                         );
