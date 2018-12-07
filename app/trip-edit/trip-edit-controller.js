@@ -88,6 +88,32 @@
                 }
             }
 
+            $scope.extractCaption = function(image) {
+               var osImage = new Image();
+               EXIF.enableXmp();
+               osImage.onload = function() {
+                  EXIF.getData(osImage, function() {
+                     try
+                     {
+                        // This works with the "Description" metadata used by Picasa and Apple "Photos"
+                        // to store the caption. It may or may not work with caption metadata from other
+                        // sources - we could potentially add more places to try later
+                        //
+                        var caption = this.xmpdata["x:xmpmeta"]["rdf:RDF"]["rdf:Description"]["dc:description"]["rdf:Alt"]["rdf:li"]["#text"];
+                        if ( caption != "" )
+                        {
+                           image.caption = caption;
+                        }
+                     }
+                     catch( e )
+                     {
+                        // The image probably doesn't have a description set 
+                     }
+                  });
+               }
+               osImage.src = image.dataUrl;
+            }
+
 
             $scope.downsize = function(image) {
                 // Downsize the given image so its maximum dimension
@@ -166,6 +192,7 @@
                             fileResource.dataUrl = reader.result;
                             if (resourceType !== 'gpx') { // Downsize maps and images
                                 $scope.downsize(fileResource);
+                                $scope.extractCaption(fileResource);
                             } else {
                                 fileResource.loaded = true;
                             }
