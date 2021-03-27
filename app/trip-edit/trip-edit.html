@@ -121,8 +121,8 @@
             <p>
                 In this new report system you don't need to down-size
                 images before attaching them; that will be done for you
-                in the web browser. There may be a small delay after
-                selecting each image while it is down-sized.
+                in the web browser. There will usually be several seconds
+                delay after selecting images while they are down-sized.
             </p>
         </div>
 
@@ -209,11 +209,12 @@
                     </td>
                 </tr>
             </table>
-            Add {{resourceType}}:&nbsp;&nbsp;<input style="display:inline"
+            Add {{resourceType}}s:&nbsp;&nbsp;<input style="display:inline"
                                                     type='file'
                                                     id="add-{{resourceType}}"
                                                     file-change="fileSelected($event, files, resourceType)"
-                                                    ng-model="tripReport[resourceType + 's']" />
+                                                    ng-model="tripReport[resourceType + 's']"
+                                                    multiple/>
 
         </div>
     </div>

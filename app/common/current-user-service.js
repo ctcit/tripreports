@@ -22,7 +22,7 @@
                         })
                        .error(function (fail) {
                            currentUser = null;
-                           alert("Couldn't fetch user info (" + fail.status + "). A network problem?");
+                           alert("Couldn't fetch user info (" + fail.error + "). A network problem?");
                            console.trace();
                            return currentUser;
                        })
