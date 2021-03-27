@@ -14,15 +14,13 @@
     <div class='tripimages' ng-if='tripReport.images.length > 0'>
         <h3>Photos</h3>
         <div ng-repeat='i in range(numImageRows)' class="row">
-            <div ng-repeat='col in range(3)'>
-                <div ng-if='3 * i + col < numImages' class="col-xs-4 tripimage">
-                    <a href='{{site.imageurl}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
-                       target='_blank'>
-                            <img class='img-thumbnail'
-                             ng-src="{{site.imageurl}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}" />
-                    </a>
-                        <p class="image-caption"><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
-                </div>
+            <div ng-repeat='col in range(numImagesInRow(i))' class='col-sm-4 tripimage'>
+                <a href='{{site.imageurl}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
+                    target='_blank'>
+                        <img class='img-thumbnail'
+                            ng-src="{{site.imageurl}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}" />
+                </a>
+                <p class="image-caption"><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
             </div>
         </div>
     </div>
