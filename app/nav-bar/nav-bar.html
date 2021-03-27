@@ -1,0 +1,29 @@
+<nav class="navbar navbar-dark bg-primary fixed-top" role="navigation" ng-controller="NavBarController"
+    ng-if="!isInFrame()">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" class="navbar-toggle" ng-init="isCollapsed = true"
+                ng-click="isCollapsed = !isCollapsed">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand px-3" href="#">CTC Trip Reports</a>
+        </div>
+        <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
+            <ul class="navbar-nav" ng-click="isCollapsed = true">
+                <li class="nav-item" ng-class="{ active: isBrowseActive() }">
+                    <a class="nav-link" ui-sref="tripreports.years">Browse</a>
+                </li>
+                <li class="nav-item" ng-if="currentTripReport()" id="edit" ng-class="{ active: isEditActive() }">
+                    <a class="nav-link" href="" ng-click="editReport()">Edit</a>
+                </li>
+                <li class="nav-item" ng-if="currentTripReport()" id="delete" ng-class="{ active: isDeleteActive() }">
+                    <a class="nav-link" href="" ng-click="deleteReport()">Delete</a>
+                </li>
+                <li class="nav-item" ng-if="!currentTripReport()" id="create" ng-class="{ active: isCreateActive() }">
+                    <a class="nav-link" ui-sref="tripreports.create">Create</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

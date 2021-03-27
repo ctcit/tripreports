@@ -10,42 +10,7 @@
         return {
             restrict: 'E',
             replace: true,
-            //templateUrl: 'app/nav-bar/nav-bar.html', // difficult to test when view is in separate file
-            template:
-                '<nav class="navbar navbar-inverse navbar-fixed-top"\n\
-                      role="navigation"\n\
-                      ng-controller="NavBarController"\n\
-                      ng-if="!isInFrame()">\
-                    <div class="container">\
-                        <div class="navbar-header">\
-                            <button type="button" class="navbar-toggle"\
-                                    ng-init="isCollapsed = true"\
-                                    ng-click="isCollapsed = !isCollapsed">\
-                                <span class="sr-only">Toggle navigation</span>\
-                                <span class="icon-bar"></span>\
-                                <span class="icon-bar"></span>\
-                                <span class="icon-bar"></span>\
-                            </button>\
-                            <a class="navbar-brand" href="#">CTC Trip Reports</a>\
-                        </div>\
-                        <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">\
-                            <ul class="nav navbar-nav" ng-click="isCollapsed = true">\
-                                <li ng-class="{ active: isBrowseActive() }">\
-                                    <a ui-sref="tripreports.years">Browse</a>\
-                                </li>\
-                                <li ng-if="currentTripReport()" id="edit" ng-class="{ active: isEditActive() }">\
-                                    <a href="" ng-click="editReport()">Edit</a>\
-                                </li>\
-                                <li ng-if="currentTripReport()" id="delete" ng-class="{ active: isDeleteActive() }">\
-                                    <a href="" ng-click="deleteReport()">Delete</a>\
-                                </li>\
-                                <li ng-if="!currentTripReport()" id="create" ng-class="{ active: isCreateActive() }">\
-                                    <a ui-sref="tripreports.create">Create</a>\
-                                </li>\
-                            </ul>\
-                        </div>\
-                    </div>\
-                </nav>',
+            templateUrl: 'app/nav-bar/nav-bar.html',
             controllerAs: 'navBarController'
         };
     }]);

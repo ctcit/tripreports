@@ -4,8 +4,8 @@
     <h2><span ng-show="tripReport.trip_type != 'news'">{{tripReport.date_display}}: </span><span class='reporttitle' ng-bind-html='tripReport.title | unsafe'></span>
     </h2>
     <div class="iframe-buttons" ng-if="isInFrame() && canEdit()">
-        <button ng-click="editReport()">Edit</button>
-        <button ng-click="deleteReport()">Delete</button>
+        <button class="btn btn-outline-primary" ng-click="editReport()">Edit</button>
+        <button class="btn btn-outline-primary" ng-click="deleteReport()">Delete</button>
     </div>
     <p><a href="" ng-click=navigateBack() >Back</a></p>
 
