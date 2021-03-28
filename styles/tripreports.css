@@ -24,10 +24,6 @@ div.iframe-buttons {
    width: auto !important;
 }
 
-.navbar-brand {
-    // font-size: 36px;
-    color: white !important; 
-}
 .row-no-padding {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -46,12 +42,9 @@ div.tripimage {
 p.image-caption {
     text-align: center;
     font-size: smaller;
-    // background-color: #EAEAEA;
 }
 
-
 .li_link {
-    // font-size: larger;
     padding-bottom: 8px;
 }
 
@@ -84,7 +77,6 @@ p.disclaimer {
     padding-left: 5px;
 }
 
-
 table.resourcetable {
     margin-bottom: 10px;
 }
@@ -100,4 +92,15 @@ h3.resource-h3 {
 #gpx-table td, #gpx-table th, #map-table td, #map-table th {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.report-card-title
+{
+    font-size: large;
+}
+
+.report-card-details
+{
+    color: black;
+    font-size: small;
 }

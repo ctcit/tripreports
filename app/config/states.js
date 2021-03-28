@@ -78,6 +78,15 @@
                         controller: 'TripEditController'
                     }
                 }
+            }).
+            state('tripreports.cards', {
+                url: '/recenttripreportcards/:maxrecent/:maxdays',
+                views: {
+                    'main-content': {
+                        templateUrl: 'app/recent-trip-cards/recent-trip-cards.html',
+                        controller: 'RecentTripCardsController'
+                    }
+                }
             });
       }]);
 
