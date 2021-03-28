@@ -1,5 +1,7 @@
 ﻿<nav-bar ></nav-bar>
 
-<div ui-view="main-content" class="container pt-3"></div>
+<div ui-view="main-content" class="container pt-3" ng-if="!isInFrame()"></div>
+<div ui-view="main-content" class="" ng-if="isInFrame()"></div>
+    
 
 

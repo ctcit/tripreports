@@ -104,3 +104,9 @@ h3.resource-h3 {
     color: black;
     font-size: small;
 }
+
+.cards-title
+{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+}
