@@ -1,7 +1,7 @@
 // Directive used to initialise ckEditor RichText plugin
 // See http://stackoverflow.com/questions/18917262/updating-textarea-value-with-ckeditor-content-in-angular-js
 (function () {
-    'use strict';
+    //'use strict';
 
     angular.module('tripReportApp').directive('ckeditor', [function () {
         return {
@@ -13,7 +13,17 @@
                     // CKEditor config
                 };
 
-                ck = CKEDITOR.replace(element[0], config);
+                // CKEditor crashes if you try and create more than one editor
+                // at the same location. For some reason following a jQuery update
+                // this method gets called twice. Work around this by holding a static reference to the ck instance
+                // and removing it and recreating if we get called again
+                if( typeof arguments.callee.ck != 'undefined' ) {
+                    arguments.callee.ck.removeAllListeners();
+                    CKEDITOR.remove(arguments.callee.ck);
+                }
+
+                arguments.callee.ck = CKEDITOR.replace(element[0], config);
+                ck = arguments.callee.ck 
 
                 if (!ngModel) {
                     return;
