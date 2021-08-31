@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    // Directive to navigate to new state 
+    // Directive to navigate to new state
     angular.module('tripReportApp').directive('navToState', [function () {
 
         var controller = ['$scope', '$state',

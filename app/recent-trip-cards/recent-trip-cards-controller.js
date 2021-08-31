@@ -6,7 +6,7 @@
     angular.module('tripReportApp').controller('RecentTripCardsController',
         ['$scope', '$state', '$stateParams', '$http', 'currentTripReportService', 'site',
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
-            var url = site.url + '/db/index.php/rest/recenttripreportcards/' + $stateParams.maxrecent + '/' + $stateParams.maxdays;  
+            var url = site.url + '/db/index.php/rest/tripreports?limit=' + $stateParams.maxrecent;
             currentTripReportService.currentTripReport = null;
             $scope.loading = true;
             $scope.site = site;

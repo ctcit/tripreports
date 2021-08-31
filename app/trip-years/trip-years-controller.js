@@ -20,7 +20,6 @@
             }).finally(function() {
                 $scope.loading = false;
             });
-            
             // Update numYears if recentOnly changes
             $scope.checkboxChanged = function() {
                 $scope.numYears = $scope.recentOnly ? NUM_RECENT : $scope.years.length;

@@ -6,8 +6,7 @@
     angular.module('tripReportApp').controller('TripsInYearController',
         ['$scope', '$state', '$stateParams', '$http', 'currentTripReportService', 'site',
         function ($scope, $state, $stateParams, $http, currentTripReportService, site) {
-            var url = site.url + '/db/index.php/rest/yearstripreports/' + $stateParams.year;
-                 
+            var url = site.url + '/db/index.php/rest/tripreports?year=' + $stateParams.year;
             currentTripReportService.currentTripReport = null;
             $scope.year = $stateParams.year;
             $scope.loading = true;

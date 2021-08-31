@@ -44,7 +44,7 @@
                 }
             }).
             state('tripreports.recent', {
-                url: '/recenttripreports/:maxrecent/:maxdays',
+                url: '/recenttripreports/:maxrecent',
                 views: {
                     'main-content': {
                         templateUrl: 'app/recent-trips/recent-trips.html',
@@ -80,7 +80,7 @@
                 }
             }).
             state('tripreports.cards', {
-                url: '/recenttripreportcards/:maxrecent/:maxdays',
+                url: '/recenttripreportcards/:maxrecent',
                 views: {
                     'main-content': {
                         templateUrl: 'app/recent-trip-cards/recent-trip-cards.html',
