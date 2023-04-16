@@ -5,8 +5,8 @@
 <div class="card-deck mb-3" ng-repeat="row in range(numRows)">
     <nav-to-state name="tripreports.show" params="{ tripId: {{tripreports[row*3 + col].id}} }" 
       ng-repeat="col in range(numCardsInRow(row))"
-      class="card mx-1 col-sm-3 p-0">
-      <img class="card-img-top"
+      class="card mx-1 p-0">
+      <img class="card-img-top" 
         src="{{site.imageurl}}/dbcroppedimage.php?id={{tripreports[row*3 + col].image_id}}&width=400&ratioLong=3&ratioShort=2" />
       <div class="card-body">
         <h3 class="card-title report-card-title">{{tripreports[row*3 + col].title}}</h3>
