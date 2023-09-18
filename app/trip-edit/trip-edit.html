@@ -1,11 +1,9 @@
 ﻿
-<h2 class="tripReportFormHdr">Trip Report or News Form</h2>
-
 <loading></loading>
 
 <form class="css-form" novalidate>
     <p>
-        Welcome to the trip report and news system.
+        Welcome to the trip report system.
         Please fill in the title and select the type of report (club trip,
         private trip or news). For trip reports, also fill in the trip start date
         and duration fields.
@@ -159,7 +157,7 @@
                                     type="button"
                                     title='Move up'
                                     ng-click="moveUp(resourceType, $index)"
-                                    class="btn btn-outline-primary">
+                                    class="btn ctc-button">
                                     <i class="fa fa-arrow-up"></i>
                             </button>
                             <br>
@@ -191,7 +189,7 @@
                     </td>
 
                     <td>
-                        <button class="btn btn-outline-primary"
+                        <button class="btn ctc-button"
                                 type="button"
                                 title="Delete {{resource.name}} ({{trusted(resource.caption)}})"
                                 ng-click="delete(resourceType, $index)">
@@ -219,11 +217,11 @@
     <hr />
     <p>
 
-        <input class="submit btn btn-primary" name="submit" type="button"
+        <input class="submit btn ctc-button" name="submit" type="button"
                value="{{submitOrSave()}}"
                ng-click="submit()" />
 
-        <input class="cancel btn btn-primary" name="cancel" type="button"
+        <input class="cancel btn ctc-button" name="cancel" type="button"
                value="Cancel"
                ng-click="cancel()" />
     </p>

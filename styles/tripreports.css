@@ -5,11 +5,62 @@
     Author     : Richard Lobb
 */
 
+:root {
+  --dark-green: #00591d;
+  --dark-green-hover: #176831;
+  --navbar-green: #02501b;
+  --background: #f5f6f5;
+  --background-higher: #ebedeb;
+  --masthead: #272d27;
+  --orange: #E05A00;
+  --yellowy: #F5AF00;
+  --black: #212529;
+  --on-dark: #f7f7f7f7;
+}
+
 body {
     padding-top: 0px;
     padding-bottom: 50px;
     padding-left: 20px;
     padding-right: 20px;
+    background-color: var(--background) !important;
+}
+
+h1, h2, h3, h4 {
+  font-family:  'Lato', sans-serif;
+}
+
+h1 {
+  color: var(--dark-green) ;
+  margin-bottom: 1.0rem;
+  font-size: 2.75rem !important;
+  /* font-weight: 600; */
+}
+
+h2 {
+  color: var(--dark-green) ;
+  font-size: 2rem !important;
+}
+
+h3 {
+  color: var(--dark-green) ;
+  font-size: 1.3rem !important;
+}
+
+a, a:hover, a:visited, a:active, a:focus {
+  color: var(--dark-green) !important;
+}
+
+
+.ctc-button, .ctc-button:link, .ctc-button:visited, .ctc-button:active {
+    background-color: var(--dark-green) !important;
+    border-color: var(--dark-green) !important;
+    color: var(--on-dark) !important;
+}
+
+.ctc-button:hover {
+  background-color: white !important;
+  background-color: var(--dark-green-hover) !important;
 }
 
 div.iframe-buttons {
@@ -103,10 +154,4 @@ h3.resource-h3 {
 {
     color: black;
     font-size: small;
-}
-
-.cards-title
-{
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.5rem;
 }
