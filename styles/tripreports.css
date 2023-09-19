@@ -1,6 +1,6 @@
 /*  Styles for the CTC Trip Reports module */
 
-/* 
+/*
     Created on : 22/03/2015, 3:12:39 PM
     Author     : Richard Lobb
 */
@@ -154,4 +154,10 @@ h3.resource-h3 {
 {
     color: black;
     font-size: small;
+}
+
+.btn-loading {
+    color: #fff !important;
+    background-color: var(--dark-green) !important;
+    border-color: var(--dark-green) !important;
 }

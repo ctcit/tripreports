@@ -12,7 +12,7 @@
             replace: true,
             template: '\
                 <p>\
-                    <button ng-show="loading" class="btn btn-success">\
+                    <button ng-show="loading" class="btn btn-loading">\
                         Loading...\
                         <i class="fa fa-spinner fa-spin"></i>\
                     </button>\
