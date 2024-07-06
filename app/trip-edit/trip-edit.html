@@ -94,6 +94,16 @@
                        ng-model="tripReport.date_display" />
             </td>
         </tr>
+
+        <tr ng-show="tripReport.trip_type != 'news'">
+            <td>Crosses private land:</td>
+            <td>
+                <input type="checkbox"
+                       ng-model="tripReport.private_land" />
+                Please select if the trip crosses private land and/or access permission is required.
+            </td>
+        </tr>
+
     </table>
     <!-- ============================================================= -->
     <h3>Body of report</h3>

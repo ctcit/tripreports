@@ -308,7 +308,7 @@
                     response = service.save(
                         {name:      file.name,
                          caption:   file.caption,
-                         dataUrl:   file.dataUrl
+                         dataUrl:   file.dataUrselect
                         }
                     );
                     promise = response.$promise.then(function(data)  {
