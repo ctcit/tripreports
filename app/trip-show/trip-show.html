@@ -64,8 +64,9 @@
         may be required.
     </p>
 
-    <p class="disclaimer" ng-if='tripReport.private_land'>
-        <em>Note:</em> This trip crosses private land. PERMISSION FROM THE LANDOWNER IS REQUIRED.
+    <p class="private-land" ng-if='tripReport.private_land'>
+        <em>Note:</em> This trip crosses private land. If you wish to repeat it, you must obtain all necessary permissions first.
+        If you are unable to arrange access permission, don't go.
     </p>
 
     <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
