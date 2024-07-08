@@ -1,4 +1,5 @@
 ﻿<div class="tripReport">
+
     <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
 
     <h2><span ng-show="tripReport.trip_type != 'news'">{{tripReport.date_display}}: </span><span class='reporttitle' ng-bind-html='tripReport.title | unsafe'></span>
@@ -64,12 +65,16 @@
         may be required.
     </p>
 
-    <p class="private-land" ng-if='tripReport.private_land'>
+    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
+
+    <p class="private-land" ng-if='tripReport.private_land'
+        style="padding-top: 10px;
+               font-weight: bold;
+               font-size: 1.2rem;">
         <em>Note:</em> This trip crosses private land. If you wish to repeat it, you must obtain all necessary permissions first.
         If you are unable to arrange access permission, don't go.
     </p>
 
-    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
     <div class='reportbody' ng-bind-html='tripReport.body | unsafe'>
     </div>
     <p>--Uploaded by: {{tripReport.uploader_name}} on {{uploadDate()}}</p>
