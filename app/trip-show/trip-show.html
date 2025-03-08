@@ -19,12 +19,12 @@
         <h3>Photos</h3>
         <div ng-repeat='i in range(numImageRows)' class="row">
             <div ng-repeat='col in range(numImagesInRow(i))' class='col-sm-6 col-lg-3 tripimage'>
-                <a href='{{site.imageurl}}/dbimage.php?id={{tripReport.images[3 * i + col].id}}'
-                    data-lightbox="trip-gallery" data-title="{{tripReport.images[3 * i + col].caption}}">
+                <a href='{{site.imageurl}}/dbimage.php?id={{tripReport.images[4 * i + col].id}}'
+                    data-lightbox="trip-gallery" data-title="{{tripReport.images[4 * i + col].caption}}">
                         <img class='ctc-thumbnail'
-                            ng-src="{{site.imageurl}}/dbcroppedimage.php?id={{tripReport.images[3 * i + col].id}}&width=220&ratioLong=3&ratioShort=2" />
+                            ng-src="{{site.imageurl}}/dbcroppedimage.php?id={{tripReport.images[4 * i + col].id}}&width=220&ratioLong=3&ratioShort=2" />
                 </a>
-                <p class="image-caption"><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
+                <p class="image-caption"><span ng-bind-html='tripReport.images[4 * i + col].caption | unsafe'></span></p>
             </div>
         </div>
     </div>
