@@ -90,6 +90,10 @@ div.tripimage {
     display: table;
 }
 
+.ctc-thumbnail {
+    border-radius: 3px
+}
+
 p.image-caption {
     text-align: center;
     font-size: smaller;

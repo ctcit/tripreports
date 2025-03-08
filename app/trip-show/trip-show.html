@@ -1,4 +1,7 @@
-﻿<div class="tripReport">
+﻿<head>
+</head>
+
+<div class="tripReport">
     <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
 
     <h2><span ng-show="tripReport.trip_type != 'news'">{{tripReport.date_display}}: </span><span class='reporttitle' ng-bind-html='tripReport.title | unsafe'></span>
@@ -14,20 +17,18 @@
     <div class='tripimages' ng-if='tripReport.images.length > 0'>
         <h3>Photos</h3>
         <div ng-repeat='i in range(numImageRows)' class="row">
-            <div ng-repeat='col in range(numImagesInRow(i))' class='col-sm-4 tripimage'>
-                <a href='{{site.imageurl}}/dbcaptionedimage.php?id={{tripReport.images[3 * i + col].id}}'
-                    target='_blank'>
-                        <img class='img-thumbnail'
-                            ng-src="{{site.imageurl}}/dbthumb.php?id={{tripReport.images[3 * i + col].id}}" />
+            <div ng-repeat='col in range(numImagesInRow(i))' class='col-sm-6 col-lg-3 tripimage'>
+                <a href='{{site.imageurl}}/dbimage.php?id={{tripReport.images[3 * i + col].id}}'
+                    data-lightbox="trip-gallery" data-title="{{tripReport.images[3 * i + col].caption}}">
+                        <img class='ctc-thumbnail'
+                            ng-src="{{site.imageurl}}/dbcroppedimage.php?id={{tripReport.images[3 * i + col].id}}&width=220&ratioLong=3&ratioShort=2" />
                 </a>
                 <p class="image-caption"><span ng-bind-html='tripReport.images[3 * i + col].caption | unsafe'></span></p>
             </div>
         </div>
     </div>
 
-
     <div class='tripgpxs' ng-if='tripReport.gpxs.length > 0'>
-
         <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
         <ul class="list-unstyled gpx-files">
             <li ng-repeat='gpx in tripReport.gpxs'>
@@ -49,12 +50,9 @@
                 </a>
                 <span ng-if="!$last">, </span>
                 <span ng-if="$last" class="copyright"> ({{tripReport.map_copyright}})</span>
-
             </span>
         </div>
-
     </div>
-
 
     <p class="disclaimer" ng-if='numGpxs + numMaps > 0'>
         <em>Note:</em> A CTC map image or a GPX route shows the approximate
