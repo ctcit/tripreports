@@ -11,21 +11,21 @@
             var currentUser = null;
             return {
                 currentUser: function () { return currentUser; },
-                isLoggedIn: function () { return currentUser != null; },
+                isLoggedIn: function () { return currentUser != null && currentUser.id != 0; },
                 hasRoles: function() { return currentUser && currentUser.roles && currentUser.roles.length > 0; },
 
                 load: function () {
-                    return $http.get(site.url + '/db/index.php/rest/user')
-                        .success(function (user) {
-                            currentUser = user;
+                    $http.get(site.url + '/db/index.php/rest/user')
+                        .then(function (response) {
+                            currentUser = response.data;
                             return currentUser;
                         })
-                       .error(function (fail) {
-                           currentUser = null;
-                           alert("Couldn't fetch user info (" + fail.error + "). A network problem?");
-                           console.trace();
-                           return currentUser;
-                       })
+                        .catch(function (error) {
+                            currentUser = null;
+                            alert("Couldn't fetch user info (" + (error.data ? error.data.error : 'unknown error') + "). A network problem?");
+                            console.trace();
+                            return currentUser;
+                        });
                 }
             }
         }

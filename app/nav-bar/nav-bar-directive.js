@@ -88,6 +88,9 @@
             $rootScope.isCreateActive = function () {
                 return isState('tripreports.create');
             }
+            $rootScope.isMember = function () {
+                return currentUserService && currentUserService.isLoggedIn();
+            }
             
             $rootScope.editReport = function () {
                 // Switch to the edit page if user is authenticated and authorised.

@@ -1,7 +1,8 @@
-﻿<head>
+<head>
 </head>
 
 <div class="tripReport">
+
     <em ng-if="tripReport.trip_type=='private'">Private Trip</em>
 
     <h2><span ng-show="tripReport.trip_type != 'news'">{{tripReport.date_display}}: </span><span class='reporttitle' ng-bind-html='tripReport.title | unsafe'></span>
@@ -28,46 +29,54 @@
         </div>
     </div>
 
-    <div class='tripgpxs' ng-if='tripReport.gpxs.length > 0'>
-        <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
-        <ul class="list-unstyled gpx-files">
-            <li ng-repeat='gpx in tripReport.gpxs'>
-                <span ng-bind-html='itemCaption(gpx) | unsafe'></span>:
-                <a href="{{siteURL}}/dbgpx.php?id={{gpx.id}}">
-                    Download file
-                </a>&nbsp;
-                <a href='{{topomapLink(gpx.id)}}' target="_blank">View on Topomap</a>
-            </li>
-        </ul>
-    </div>
-
-    <div class='tripmaps' ng-if='tripReport.maps.length > 0'>
-        <h4>{{pluralise('Route map', numMaps)}}:</h4>
-        <div class="map-links">
-            <span ng-repeat='map in tripReport.maps'>
-                <a href="{{siteURL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'>
-                    <span ng-bind-html='itemCaption(map) | unsafe'></span>
-                </a>
-                <span ng-if="!$last">, </span>
-                <span ng-if="$last" class="copyright"> ({{tripReport.map_copyright}})</span>
-            </span>
+    <!-- Maps and GPXs. If the trip involves crossing private land, these are only visible to members-->
+    <div ng-if='(!tripReport.private_land || isMember() )'>
+        <div class='tripgpxs' ng-if='tripReport.gpxs.length > 0'>
+            <h4>{{pluralise('GPX File', numGpxs)}}:</h4>
+            <ul class="list-unstyled gpx-files">
+                <li ng-repeat='gpx in tripReport.gpxs'>
+                    <span ng-bind-html='itemCaption(gpx) | unsafe'></span>:
+                    <a href="{{siteURL}}/dbgpx.php?id={{gpx.id}}">
+                        Download file
+                    </a>&nbsp;
+                    <a href='{{topomapLink(gpx.id)}}' target="_blank">View on Topomap</a>
+                </li>
+            </ul>
         </div>
+
+        <div class='tripmaps' ng-if='tripReport.maps.length > 0'>
+            <h4>{{pluralise('Route map', numMaps)}}:</h4>
+            <div class="map-links">
+                <span ng-repeat='map in tripReport.maps'>
+                    <a href="{{siteURL}}/dbcaptionedimage.php?id={{map.id}}" target='_blank'>
+                        <span ng-bind-html='itemCaption(map) | unsafe'></span>
+                    </a>
+                    <span ng-if="!$last">, </span>
+                    <span ng-if="$last" class="copyright"> ({{tripReport.map_copyright}})</span>
+
+                </span>
+            </div>
+        </div>
+
+        <p class="disclaimer" ng-if='numGpxs + numMaps > 0'>
+            <em>Note:</em> A CTC map image or a GPX route shows the approximate
+            route taken by a particular party on a particular day.
+            It should not be regarded as a recommended route or even
+            necessarily a good route. Also, permission from land-owners
+            may be required.
+        </p>
     </div>
 
-    <p class="disclaimer" ng-if='numGpxs + numMaps > 0'>
-        <em>Note:</em> A CTC map image or a GPX route shows the approximate
-        route taken by a particular party on a particular day.
-        It should not be regarded as a recommended route or even
-        necessarily a good route. Also, permission from land-owners
-        may be required.
-    </p>
+    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
 
-    <p class="private-land" ng-if='tripReport.private_land'>
+    <p class="private-land" ng-if='tripReport.private_land'
+        style="padding-top: 10px;
+               font-weight: bold;
+               font-size: 1.2rem;">
         <em>Note:</em> This trip crosses private land. If you wish to repeat it, you must obtain all necessary permissions first.
         If you are unable to arrange access permission, don't go.
     </p>
 
-    <h3 ng-if='numGpxs + numMaps + numImages > 0'>Report</h3>
     <div class='reportbody' ng-bind-html='tripReport.body | unsafe'>
     </div>
     <p>--Uploaded by: {{tripReport.uploader_name}} on {{uploadDate()}}</p>
