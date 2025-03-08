@@ -4,7 +4,8 @@
 
 <div class="card-deck mb-3" ng-repeat="row in range(numRows)">
   <a ng-repeat="col in range(numCardsInRow(row))" class="card mx-1 p-0"
-    href="{{site.tripreportbaseurl}}?goto=tripreports%2F{{tripreports[row*3 + col].id}}"
+    ng-click="navigateToReport(tripreports[row*3 + col])"
+    href="#"
     class="btn btn-outline-primary btn-sm mx-1 mb-1">
     <img class="card-img-top"
       src="{{site.imageurl}}/dbcroppedimage.php?id={{tripreports[row*3 + col].image_id}}&width=400&ratioLong=3&ratioShort=2" />

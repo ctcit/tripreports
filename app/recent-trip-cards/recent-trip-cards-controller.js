@@ -10,6 +10,18 @@
             currentTripReportService.currentTripReport = null;
             $scope.loading = true;
             $scope.site = site;
+
+            $scope.navigateToReport = function(tripreport) {
+                url = site.tripreportbaseurl + '?goto=tripreports%2F' + tripreport.id;
+                if (window.self !== window.top) {
+                    // If inside an iframe, navigate the parent window
+                    window.top.location.href = url;
+                } else {
+                    // If not inside an iframe, navigate the current window
+                    window.location.href = url;
+                }
+            }
+
             $http.get(url).then(function (response) {
                     $scope.tripreports = response.data.filter(item => item.trip_type != 'news');
                     // PENDING - This is a pretty poor way of doing this - would be better to
