@@ -110,9 +110,8 @@
     <!-- ============================================================= -->
     <h3>Body of report</h3>
 
-    <textarea ng-model="tripReport.body" ckeditor></textarea>
+    <div ng-model="tripReport.body" quill-editor style="min-height: 300px;"></div>
     <p ng-show="emptyBody()" class="error">Empty trip report!</p>
-
     <!-- ============================================================= -->
 
     <div ng-repeat="resourceType in resourceTypes"
