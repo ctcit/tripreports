@@ -185,3 +185,44 @@ h3.resource-h3 {
     border-right: 1px solid #ccc;
     font-family: inherit;
 }
+
+
+/* Add spacing for headings in the editor */
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3 {
+    margin-top: 1.5em !important;
+    margin-bottom: 0.75em !important;
+}
+
+/* First heading shouldn't have top margin */
+.ql-editor h1:first-child,
+.ql-editor h2:first-child,
+.ql-editor h3:first-child {
+    margin-top: 0 !important;
+}
+
+/* Add spacing for lists and blockquotes */
+.ql-editor ul,
+.ql-editor ol {
+    margin-bottom: 1em !important;
+}
+
+.ql-editor blockquote {
+    margin: 1em 0 !important;
+    padding-left: 1em !important;
+    border-left: 4px solid var(--dark-green) !important;
+}
+
+.ql-toolbar {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+.ql-container {
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    font-family: inherit;
+}
