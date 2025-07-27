@@ -186,6 +186,17 @@ h3.resource-h3 {
     font-family: inherit;
 }
 
+/* Override Quill's default paragraph spacing */
+.ql-editor p {
+    margin-bottom: 1em !important;
+    margin-top: 0 !important;
+}
+
+/* Handle the last paragraph to avoid extra space at bottom */
+.ql-editor p:last-child {
+    margin-bottom: 0 !important;
+}
+
 
 /* Add spacing for headings in the editor */
 .ql-editor h1,
